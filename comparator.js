@@ -63,11 +63,18 @@ readAllFiles().then((res) => {
     //for every OSM road
     for (var j = 0; j < dataOSM.roads.length; j++) {
       roadOSMName = dataOSM.roads[j].properties.name;
-      //level 1 filter - check to see if roads intersect/overlap
-      compareRoadsForOverlap(dataOS.roads[i], dataOSM.roads[j]) ? overlaps.push(dataOSM.roads[j]) : "";
-    }
+      const coordOS = turf.point(dataOS.roads[i].geometry.coordinates[0][0]); //first OS coordinate
+      const coordOSM = turf.point(dataOSM.roads[j].geometry.coordinates[0]); //first OSM coordinate
+      const distanceBetween = turf.distance(coordOS, coordOSM); //distance between first coordinates
 
-    //level 2 filter - check to see if road name strings are over 70% match
+      //if start of roads are within 100m of each other
+      if (distanceBetween < 0.01) {
+        //level 1 filter - check to see if roads intersect/overlap
+        compareRoadsForOverlap(dataOS.roads[i], dataOSM.roads[j]) ? overlaps.push(dataOSM.roads[j]) : "";
+      }
+  }
+
+    // level 2 filter - check to see if road name strings are over 70% match
     if (roadOSName) {
       nameMatches = overlaps.filter((road) => {
         if (road.properties.name) { //if OSM road has a name attribute
