@@ -1,0 +1,349 @@
+{
+  "roads": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "3076785",
+        "name": "Cowcross Street",
+        "highway": "unclassified",
+        "z_order": 3,
+        "other_tags": {
+          "abutters": "commercial",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "surface": "paving_stones"
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.1043757,
+            51.5201677
+          ],
+          [
+            -0.1041837,
+            51.5201409
+          ],
+          [
+            -0.103959,
+            51.5201366
+          ],
+          [
+            -0.1035728,
+            51.5201422
+          ],
+          [
+            -0.103348,
+            51.5201454
+          ],
+          [
+            -0.1032543,
+            51.5201458
+          ],
+          [
+            -0.1031949,
+            51.5201447
+          ],
+          [
+            -0.1031305,
+            51.5201441
+          ],
+          [
+            -0.1029367,
+            51.5201298
+          ],
+          [
+            -0.1027687,
+            51.5201178
+          ],
+          [
+            -0.1025039,
+            51.520101
+          ],
+          [
+            -0.1024361,
+            51.5200924
+          ],
+          [
+            -0.1023924,
+            51.5200869
+          ],
+          [
+            -0.1022199,
+            51.5200225
+          ],
+          [
+            -0.1020969,
+            51.5199081
+          ],
+          [
+            -0.1020784,
+            51.5198974
+          ],
+          [
+            -0.102028,
+            51.5198878
+          ],
+          [
+            -0.1019667,
+            51.5198902
+          ],
+          [
+            -0.1017666,
+            51.5199084
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "156159281",
+        "name": "Holborn Viaduct",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "cycleway": "lane",
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "postal_code": "EC1",
+          "ref": "A40",
+          "sidewalk": "left",
+          "surface": "asphalt"
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.1029335,
+            51.5165773
+          ],
+          [
+            -0.1030749,
+            51.5165961
+          ],
+          [
+            -0.1032032,
+            51.5166362
+          ],
+          [
+            -0.1034216,
+            51.5167034
+          ],
+          [
+            -0.103953,
+            51.5168512
+          ],
+          [
+            -0.1045709,
+            51.517034
+          ],
+          [
+            -0.1047162,
+            51.5170723
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "405576225",
+        "name": "Holborn Viaduct",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "postal_code": "EC1",
+          "ref": "A40",
+          "sidewalk": "left",
+          "surface": "asphalt"
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.1041485,
+            51.5170008
+          ],
+          [
+            -0.1040919,
+            51.5169827
+          ],
+          [
+            -0.1037468,
+            51.516872
+          ],
+          [
+            -0.1032675,
+            51.5167183
+          ],
+          [
+            -0.1030199,
+            51.516632
+          ],
+          [
+            -0.1029335,
+            51.5165773
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "156159281",
+        "name": "Holborn Viaduct",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "cycleway": "lane",
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "postal_code": "EC1",
+          "ref": "A40",
+          "sidewalk": "left",
+          "surface": "asphalt"
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.1029335,
+            51.5165773
+          ],
+          [
+            -0.1030749,
+            51.5165961
+          ],
+          [
+            -0.1032032,
+            51.5166362
+          ],
+          [
+            -0.1034216,
+            51.5167034
+          ],
+          [
+            -0.103953,
+            51.5168512
+          ],
+          [
+            -0.1045709,
+            51.517034
+          ],
+          [
+            -0.1047162,
+            51.5170723
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "405576225",
+        "name": "Holborn Viaduct",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "postal_code": "EC1",
+          "ref": "A40",
+          "sidewalk": "left",
+          "surface": "asphalt"
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.1041485,
+            51.5170008
+          ],
+          [
+            -0.1040919,
+            51.5169827
+          ],
+          [
+            -0.1037468,
+            51.516872
+          ],
+          [
+            -0.1032675,
+            51.5167183
+          ],
+          [
+            -0.1030199,
+            51.516632
+          ],
+          [
+            -0.1029335,
+            51.5165773
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "8657336",
+        "name": "Wormwood Street",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "ref": "A1211",
+          "sidewalk": "left",
+          "source:name": "local knowledge",
+          "surface": "asphalt"
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.0835633,
+            51.5163762
+          ],
+          [
+            -0.0834018,
+            51.5163956
+          ],
+          [
+            -0.0821805,
+            51.5162408
+          ],
+          [
+            -0.0819514,
+            51.5162122
+          ],
+          [
+            -0.081883,
+            51.516204
+          ],
+          [
+            -0.0817039,
+            51.5161827
+          ],
+          [
+            -0.0816722,
+            51.5161785
+          ]
+        ]
+      }
+    }
+  ]
+}

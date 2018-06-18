@@ -15,6 +15,11 @@ readFile = (path) => {
   return fs.readFileAsync(path); //return file data
 }
 
+//Extract data from file
+writeFile = (path, data) => {
+  return fs.writeFileAsync(path, data); //return file data
+}
+
 //Extract data from each file
 readAllFiles = () => {
   var promises = [];
@@ -22,6 +27,19 @@ readAllFiles = () => {
   promises.push(readFile(config.inputFileOSM)); //read in OSM file second
 
   return Promise.all(promises); //return promise that is resolved when all files are done loading
+}
+
+//Create or append to output files specified in config
+createOutputFiles = () => {
+  var promises = [];
+
+  if (config.outputMode === "new") {
+    promises.push(writeFile(config.outputFileOS, JSON.stringify({"roads": []}, null, 2)));
+    promises.push(writeFile(config.outputFileOSM, JSON.stringify({"roads": []}, null, 2)));
+    return Promise.all(promises);
+  } else {
+    return Promise.resolve(true); //files already exist
+  }
 }
 
 //Test which OSM roads intersect/are contained with an OS road
@@ -44,70 +62,86 @@ compareRoadsForOverlap = (road1, road2) => {
 
 }
 
-readAllFiles().then((res) => {
-  dataOS = JSON.parse(res[0].toString());
-  dataOSM = JSON.parse(res[res.length-1].toString());
+createOutputFiles().then((res) => {
+  readAllFiles().then((res) => {
+    dataOS = JSON.parse(res[0].toString());
+    dataOSM = JSON.parse(res[res.length-1].toString());
 
-  const timeStarted = moment(); //the time the script starts
-  const numOfRoads = dataOS.roads.length; //number of OS roads to check
-  let numOfRoadsChecked = 0; //number of OS roads that have been checked
+    const timeStarted = moment(); //the time the script starts
+    const numOfRoads = dataOS.roads.length; //number of OS roads to check
+    let numOfRoadsChecked = 0; //number of OS roads that have been checked
 
-  //for every OS road
-  for (var i = 0; i < dataOS.roads.length; i++) {
-    let overlaps = []; //OSM roads that pass level 1 of filtering
-    let nameMatches = []; //OSM roads pass level 2 of filtering
-    const roadOSName = dataOS.roads[i].properties.roadname ? dataOS.roads[i].properties.roadname.toLowerCase() : "";
-    let roadOSMName = "";
-    let commonID = "";
+    //for every OS road
+    for (var i = 0; i < dataOS.roads.length; i++) {
+      let overlaps = []; //OSM roads that pass level 1 of filtering
+      let nameMatches = []; //OSM roads pass level 2 of filtering
+      const roadOSName = dataOS.roads[i].properties.roadname ? dataOS.roads[i].properties.roadname.toLowerCase() : "";
+      let roadOSMName = "";
+      let commonID = "";
 
-    //for every OSM road
-    for (var j = 0; j < dataOSM.roads.length; j++) {
-      roadOSMName = dataOSM.roads[j].properties.name;
-      const coordOS = turf.point(dataOS.roads[i].geometry.coordinates[0][0]); //first OS coordinate
-      const coordOSM = turf.point(dataOSM.roads[j].geometry.coordinates[0]); //first OSM coordinate
-      const distanceBetween = turf.distance(coordOS, coordOSM); //distance between first coordinates
+      //for every OSM road
+      for (var j = 0; j < dataOSM.roads.length; j++) {
+        roadOSMName = dataOSM.roads[j].properties.name;
+        const coordOS = turf.point(dataOS.roads[i].geometry.coordinates[0][0]); //first OS coordinate
+        const coordOSM = turf.point(dataOSM.roads[j].geometry.coordinates[0]); //first OSM coordinate
+        const distanceBetween = turf.distance(coordOS, coordOSM); //distance between first coordinates
 
-      //if start of roads are within 100m of each other
-      if (distanceBetween < 0.01) {
-        //level 1 filter - check to see if roads intersect/overlap
-        compareRoadsForOverlap(dataOS.roads[i], dataOSM.roads[j]) ? overlaps.push(dataOSM.roads[j]) : "";
-      }
-  }
-
-    // level 2 filter - check to see if road name strings are over 70% match
-    if (roadOSName) {
-      nameMatches = overlaps.filter((road) => {
-        if (road.properties.name) { //if OSM road has a name attribute
-          const comparison = StringSimilarity.compareTwoStrings(roadOSName, road.properties.name.toLowerCase());
-          if (comparison > 0.7) { //if strings have 70% similarity match
-            return true; //the road names are similar enough for a match
-          } else {
-            return false; //the road names are too different for a match
-          }
+        //if start of roads are within 100m of each other
+        if (distanceBetween < 0.1) {
+          //level 1 filter - check to see if roads intersect/overlap
+          compareRoadsForOverlap(dataOS.roads[i], dataOSM.roads[j]) ? overlaps.push(dataOSM.roads[j]) : "";
         }
-      });
-    } else {
-      nameMatches = overlaps;
     }
 
-    //////// Output Formatting ////////
+      // level 2 filter - check to see if road name strings are over 70% match
+      if (roadOSName) {
+        nameMatches = overlaps.filter((road) => {
+          if (road.properties.name) { //if OSM road has a name attribute
+            const comparison = StringSimilarity.compareTwoStrings(roadOSName, road.properties.name.toLowerCase());
+            if (comparison > 0.7) { //if strings have 70% similarity match
+              return true; //the road names are similar enough for a match
+            } else {
+              return false; //the road names are too different for a match
+            }
+          }
+        });
+      } else {
+        nameMatches = overlaps;
+      }
 
-    numOfRoadsChecked++; //increase number of roads checked
-    let timeNow = moment(); //update time after checking road
-    const timeDiff = timeNow.diff(timeStarted) / 1000; //calc diff between now and when script started
-    const perSecond = numOfRoadsChecked / timeDiff; //num of roads checked per second
-    const willFinish = moment().add((numOfRoads-numOfRoadsChecked) / perSecond, "seconds"); //ETA
+      //////// Output File Formatting ////////
+      let newDataOS = JSON.parse(fs.readFileSync(config.outputFileOS).toString()); //read OS output file
+      newDataOS.roads.push(dataOS.roads[i]); //add new road
+      fs.writeFileSync(config.outputFileOS, JSON.stringify(newDataOS, null, 2)); //write back to file
 
-    console.log("------------------------------------------------------------------");
-    console.log(`=> Checking road ${i+1}/${numOfRoads}: ${dataOS.roads[i].properties.roadname}`);
-    console.log("------------------------------------------------------------------");
-    console.log("\nThe following possible matches were found in OSM Data:\n\n", nameMatches);
-    console.log("\n------------------------------------------------------------------");
-    console.log(`Processed ${numOfRoadsChecked}/${numOfRoads} (${perSecond * 60} per minute)`);
-    console.log(`Started ${timeStarted.fromNow()}, will finish ${moment().to(willFinish)}`);
-    console.log("------------------------------------------------------------------\n\n");
+      let newDataOSM = JSON.parse(fs.readFileSync(config.outputFileOSM).toString()); //read OSM output file
+      nameMatches.map((road) => {
+        newDataOSM.roads.push(road); //add matched roads
+      })
+      fs.writeFileSync(config.outputFileOSM, JSON.stringify(newDataOSM, null, 2)); //write back to file
+      //////// End of Output File Formatting ////////
 
-    //////// End of Output Formatting ////////
-  }
 
+
+      //////// Console Output Formatting ////////
+
+      numOfRoadsChecked++; //increase number of roads checked
+      let timeNow = moment(); //update time after checking road
+      const timeDiff = timeNow.diff(timeStarted) / 1000; //calc diff between now and when script started
+      const perSecond = numOfRoadsChecked / timeDiff; //num of roads checked per second
+      const willFinish = moment().add((numOfRoads-numOfRoadsChecked) / perSecond, "seconds"); //ETA
+
+      console.log("------------------------------------------------------------------");
+      console.log(`=> Checking road ${i+1}/${numOfRoads}: ${dataOS.roads[i].properties.roadname}`);
+      console.log("------------------------------------------------------------------");
+      console.log("\nThe following possible matches were found in OSM Data:\n\n", nameMatches);
+      console.log("\n------------------------------------------------------------------");
+      console.log(`Processed ${numOfRoadsChecked}/${numOfRoads} (${perSecond * 60} per minute)`);
+      console.log(`Started ${timeStarted.fromNow()}, will finish ${moment().to(willFinish)}`);
+      console.log("------------------------------------------------------------------\n\n");
+
+      //////// End of Console Output Formatting ////////
+    }
+
+  });
 });
