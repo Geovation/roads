@@ -29,16 +29,18 @@ readAllFiles = () => {
   return Promise.all(promises); //return promise that is resolved when all files are done loading
 }
 
-//Create or append to output files specified in config
+//Create or append to output files specified in config file
 createOutputFiles = () => {
   var promises = [];
 
-  if (config.outputMode === "new") {
+  if (config.outputMode === "new") { //if user wants new output files
     promises.push(writeFile(config.outputFileOS, JSON.stringify({"roads": []}, null, 2)));
     promises.push(writeFile(config.outputFileOSM, JSON.stringify({"roads": []}, null, 2)));
-    return Promise.all(promises);
+    return Promise.all(promises); //create new output files
+  } else if (config.outputMode === "append"){
+    return Promise.resolve(true); // else files already exist
   } else {
-    return Promise.resolve(true); //files already exist
+    return console.error("Please enter new or append for output mode.");
   }
 }
 
@@ -64,8 +66,8 @@ compareRoadsForOverlap = (road1, road2) => {
 
 createOutputFiles().then((res) => {
   readAllFiles().then((res) => {
-    dataOS = JSON.parse(res[0].toString());
-    dataOSM = JSON.parse(res[res.length-1].toString());
+    dataOS = JSON.parse(res[0].toString()); //parse OS data
+    dataOSM = JSON.parse(res[res.length-1].toString()); //parse OSM data
 
     const timeStarted = moment(); //the time the script starts
     const numOfRoads = dataOS.roads.length; //number of OS roads to check
@@ -75,9 +77,8 @@ createOutputFiles().then((res) => {
     for (var i = 0; i < dataOS.roads.length; i++) {
       let overlaps = []; //OSM roads that pass level 1 of filtering
       let nameMatches = []; //OSM roads pass level 2 of filtering
-      const roadOSName = dataOS.roads[i].properties.roadname ? dataOS.roads[i].properties.roadname.toLowerCase() : "";
+      let roadOSName = dataOS.roads[i].properties.roadname ? dataOS.roads[i].properties.roadname.toLowerCase() : "";
       let roadOSMName = "";
-      let commonID = "";
 
       //for every OSM road
       for (var j = 0; j < dataOSM.roads.length; j++) {
@@ -91,7 +92,7 @@ createOutputFiles().then((res) => {
           //level 1 filter - check to see if roads intersect/overlap
           compareRoadsForOverlap(dataOS.roads[i], dataOSM.roads[j]) ? overlaps.push(dataOSM.roads[j]) : "";
         }
-    }
+      }
 
       // level 2 filter - check to see if road name strings are over 70% match
       if (roadOSName) {
@@ -110,13 +111,17 @@ createOutputFiles().then((res) => {
       }
 
       //////// Output File Formatting ////////
+      let newId = uuidv4(); //create a new, unique id for identical roads
+
       let newDataOS = JSON.parse(fs.readFileSync(config.outputFileOS).toString()); //read OS output file
-      newDataOS.roads.push(dataOS.roads[i]); //add new road
+      dataOS.roads[i].properties.commonID = newId; //add the common id to the road
+      newDataOS.roads.push(dataOS.roads[i]); //push to the existing data
       fs.writeFileSync(config.outputFileOS, JSON.stringify(newDataOS, null, 2)); //write back to file
 
       let newDataOSM = JSON.parse(fs.readFileSync(config.outputFileOSM).toString()); //read OSM output file
       nameMatches.map((road) => {
-        newDataOSM.roads.push(road); //add matched roads
+        road.properties.commonID = newId; //add the common id to the roads
+        newDataOSM.roads.push(road); //push to the existing data
       })
       fs.writeFileSync(config.outputFileOSM, JSON.stringify(newDataOSM, null, 2)); //write back to file
       //////// End of Output File Formatting ////////
