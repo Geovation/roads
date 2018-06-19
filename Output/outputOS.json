@@ -1,0 +1,688 @@
+{
+  "roads": [
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": "3356162",
+        "gml_id": "osgb4000000030147495",
+        "beginlifespanversion": "2017-07-22T00:00:00.000",
+        "localid": 4000000030147495,
+        "innetwork_href": "#OSHighwayNetwork",
+        "fictitious": "0",
+        "endnode_href": "#osgb4000000029972488",
+        "startnode_href": "#osgb5000005152674470",
+        "validfrom_nilreason": "unknown",
+        "validfrom_nil": "1",
+        "reasonforchange": "Modified Geometry",
+        "roadclassification": "Unclassified",
+        "routehierarchy": "Local Road",
+        "formofway": "Single Carriageway",
+        "trunkroad": "0",
+        "primaryroute": "0",
+        "roadname": "(1:Cowcross Street)",
+        "operationalstate": "Open",
+        "provenance": "OS Urban And OS Height",
+        "directionality": "in direction",
+        "length": 149.51,
+        "length_uom": "m",
+        "matchstatus": "Matched",
+        "alternateidentifier": "(4:5570_5316270181840,5570_5316690181842,5570_5317240181840,...)",
+        "identifierscheme": "(4:NSG Elementary Street Unit ID (ESU ID),...)",
+        "startgradeseparation": 0,
+        "endgradeseparation": 0,
+        "elevationgain_indirection": 3.4,
+        "elevationgain_indirection_uom": "m",
+        "elevationgain_inoppositedirection": 0,
+        "elevationgain_inoppositedirection_uom": "m",
+        "relatedroadarea_href": "(3:#osgb1000001801942876,#osgb1000001801943233,#osgb5000005152674465)",
+        "formspartof_role": "(2:Road,Street)",
+        "formspartof_href": "(2:#osgb4000000030527866,#usrn21604616)",
+        "roadwidth_averagewidth": 6.4,
+        "roadwidth_averagewidth_uom": "m",
+        "roadwidth_minimumwidth": 5,
+        "roadwidth_minimumwidth_uom": "m",
+        "roadwidth_confidencelevel": "OS Urban And Full Extent",
+        "roadname_lang": null,
+        "alternatename": null,
+        "roadclassificationnumber": null,
+        "alternatename_lang": null,
+        "roadstructure": null,
+        "cyclefacility": null,
+        "cyclefacility_wholelink_nil": null,
+        "cyclefacility_wholelink_nilreason": null,
+        "commonID": "6696c311-c148-4c22-9172-c88aa46cd1e3"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -0.104328173345222,
+              51.52018166893563
+            ],
+            [
+              -0.104227289471634,
+              51.520161468739886
+            ],
+            [
+              -0.10401159063386,
+              51.52014899025447
+            ],
+            [
+              -0.103373146628229,
+              51.520160379045805
+            ],
+            [
+              -0.103218205685036,
+              51.52016314383205
+            ],
+            [
+              -0.102672317713968,
+              51.520118345710706
+            ],
+            [
+              -0.102519662486871,
+              51.520115714919186
+            ],
+            [
+              -0.102442214799468,
+              51.520105631387445
+            ],
+            [
+              -0.102421051519803,
+              51.52010084666201
+            ],
+            [
+              -0.102381438711959,
+              51.52009187864517
+            ],
+            [
+              -0.102314066653576,
+              51.52006758758905
+            ],
+            [
+              -0.102262617024087,
+              51.520044471317476
+            ],
+            [
+              -0.102229506740888,
+              51.52002125600683
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": "3356285",
+        "gml_id": "osgb4000000030147926",
+        "beginlifespanversion": "2017-07-22T00:00:00.000",
+        "localid": 4000000030147926,
+        "innetwork_href": "#OSHighwayNetwork",
+        "fictitious": "0",
+        "endnode_href": "#osgb4000000029975660",
+        "startnode_href": "#osgb4000000029976224",
+        "validfrom_nilreason": "unknown",
+        "validfrom_nil": "1",
+        "reasonforchange": "Modified Geometry",
+        "roadclassification": "Unclassified",
+        "routehierarchy": "Restricted Local Access Road",
+        "formofway": "Single Carriageway",
+        "trunkroad": "0",
+        "primaryroute": "0",
+        "roadname": "(1:Romford Street)",
+        "operationalstate": "Open",
+        "provenance": "OS Urban And OS Height",
+        "directionality": "in opposite direction",
+        "length": 135.05,
+        "length_uom": "m",
+        "matchstatus": "Matched",
+        "alternateidentifier": "(1:5900_5345030181522)",
+        "identifierscheme": "(1:NSG Elementary Street Unit ID (ESU ID))",
+        "startgradeseparation": 0,
+        "endgradeseparation": 0,
+        "elevationgain_indirection": 0,
+        "elevationgain_indirection_uom": "m",
+        "elevationgain_inoppositedirection": 0.3,
+        "elevationgain_inoppositedirection_uom": "m",
+        "relatedroadarea_href": "(3:#osgb1000001802530674,#osgb1000001802546708,#osgb1000001802546709)",
+        "formspartof_role": "(2:Road,Street)",
+        "formspartof_href": "(2:#osgb4000000030528278,#usrn22701029)",
+        "roadwidth_averagewidth": 5.3,
+        "roadwidth_averagewidth_uom": "m",
+        "roadwidth_minimumwidth": 3,
+        "roadwidth_minimumwidth_uom": "m",
+        "roadwidth_confidencelevel": "OS Urban And Full Extent",
+        "roadname_lang": null,
+        "alternatename": null,
+        "roadclassificationnumber": null,
+        "alternatename_lang": null,
+        "roadstructure": null,
+        "cyclefacility": null,
+        "cyclefacility_wholelink_nil": null,
+        "cyclefacility_wholelink_nilreason": null,
+        "commonID": "58093adb-7bd3-4695-ade9-37cce127948b"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -0.063054595462785,
+              51.517213202008946
+            ],
+            [
+              -0.062975738445583,
+              51.51691166927457
+            ],
+            [
+              -0.062955388188095,
+              51.5168338699978
+            ],
+            [
+              -0.062944036412156,
+              51.51676174091709
+            ],
+            [
+              -0.062930879171498,
+              51.51670973461641
+            ],
+            [
+              -0.062882318873468,
+              51.51651791850527
+            ],
+            [
+              -0.062872111709284,
+              51.516418830263426
+            ],
+            [
+              -0.062836912704094,
+              51.516229402152945
+            ],
+            [
+              -0.062798466453364,
+              51.51609678114191
+            ],
+            [
+              -0.062774051932548,
+              51.51601253885164
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": "3560895",
+        "gml_id": "osgb4000000030147417",
+        "beginlifespanversion": "2017-09-16T00:00:00.000",
+        "localid": 4000000030147417,
+        "innetwork_href": "#OSHighwayNetwork",
+        "fictitious": "0",
+        "endnode_href": "#osgb4000000029971860",
+        "startnode_href": "#osgb5000005168384408",
+        "validfrom_nilreason": "unknown",
+        "validfrom_nil": "1",
+        "reasonforchange": "Modified Geometry And Attributes",
+        "roadclassification": "A Road",
+        "routehierarchy": "A Road",
+        "formofway": "Dual Carriageway",
+        "trunkroad": "0",
+        "primaryroute": "0",
+        "roadname": "(1:Holborn Viaduct)",
+        "operationalstate": "Open",
+        "provenance": "OS Urban And Interpolated OS Height",
+        "directionality": "in direction",
+        "length": 141.1,
+        "length_uom": "m",
+        "matchstatus": "Matched",
+        "alternateidentifier": "(2:5030_5315770181511,5030_5316530181473)",
+        "identifierscheme": "(2:NSG Elementary Street Unit ID (ESU ID),...)",
+        "startgradeseparation": 0,
+        "endgradeseparation": 1,
+        "elevationgain_indirection": 0,
+        "elevationgain_indirection_uom": "m",
+        "elevationgain_inoppositedirection": 2.3,
+        "elevationgain_inoppositedirection_uom": "m",
+        "relatedroadarea_href": "(2:#osgb1000001800009702,#osgb1000001801943215)",
+        "formspartof_role": "(4:Road,Road,Street,Street)",
+        "formspartof_href": "(4:#osgb4000000018085527,#osgb4000000030502721,#usrn8100285,#usrn8100888)",
+        "roadwidth_averagewidth": 7.5,
+        "roadwidth_averagewidth_uom": "m",
+        "roadwidth_minimumwidth": null,
+        "roadwidth_minimumwidth_uom": null,
+        "roadwidth_confidencelevel": "OS Urban And Full Extent",
+        "roadname_lang": null,
+        "alternatename": null,
+        "roadclassificationnumber": "A40",
+        "alternatename_lang": null,
+        "roadstructure": null,
+        "cyclefacility": null,
+        "cyclefacility_wholelink_nil": null,
+        "cyclefacility_wholelink_nilreason": null,
+        "commonID": "5250319f-d16b-43e7-9d6f-1b8f1751ffbb"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -0.103240315720057,
+              51.516677216346814
+            ],
+            [
+              -0.103309634368772,
+              51.516664964776005
+            ],
+            [
+              -0.103313162852409,
+              51.51666433836959
+            ],
+            [
+              -0.103590781737984,
+              51.516753070774115
+            ],
+            [
+              -0.103675901256347,
+              51.516780273962006
+            ],
+            [
+              -0.104345785104731,
+              51.516961962960565
+            ],
+            [
+              -0.104563194354902,
+              51.517034234533085
+            ],
+            [
+              -0.10472964966941,
+              51.5170895674788
+            ],
+            [
+              -0.104772301421169,
+              51.51710374568104
+            ],
+            [
+              -0.10487163569156,
+              51.517141321470206
+            ],
+            [
+              -0.105055900815686,
+              51.517216240024105
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": "3560896",
+        "gml_id": "osgb4000000030147418",
+        "beginlifespanversion": "2017-09-16T00:00:00.000",
+        "localid": 4000000030147418,
+        "innetwork_href": "#OSHighwayNetwork",
+        "fictitious": "0",
+        "endnode_href": "#osgb4000000029971861",
+        "startnode_href": "#osgb5000005168384408",
+        "validfrom_nilreason": "unknown",
+        "validfrom_nil": "1",
+        "reasonforchange": "Modified Geometry And Attributes",
+        "roadclassification": "A Road",
+        "routehierarchy": "A Road",
+        "formofway": "Dual Carriageway",
+        "trunkroad": "0",
+        "primaryroute": "0",
+        "roadname": "(1:Holborn Viaduct)",
+        "operationalstate": "Open",
+        "provenance": "OS Urban And Interpolated OS Height",
+        "directionality": "in opposite direction",
+        "length": 144.24,
+        "length_uom": "m",
+        "matchstatus": "Matched",
+        "alternateidentifier": "(2:5030_5315880181510,5030_5316620181479)",
+        "identifierscheme": "(2:NSG Elementary Street Unit ID (ESU ID),...)",
+        "startgradeseparation": 0,
+        "endgradeseparation": 1,
+        "elevationgain_indirection": 0,
+        "elevationgain_indirection_uom": "m",
+        "elevationgain_inoppositedirection": 2.3,
+        "elevationgain_inoppositedirection_uom": "m",
+        "relatedroadarea_href": "(2:#osgb1000001800009702,#osgb1000001801943215)",
+        "formspartof_role": "(4:Road,Road,Street,Street)",
+        "formspartof_href": "(4:#osgb4000000018085527,#osgb4000000030502721,#usrn8100285,#usrn8100888)",
+        "roadwidth_averagewidth": 7.8,
+        "roadwidth_averagewidth_uom": "m",
+        "roadwidth_minimumwidth": null,
+        "roadwidth_minimumwidth_uom": null,
+        "roadwidth_confidencelevel": "OS Urban And Full Extent",
+        "roadname_lang": null,
+        "alternatename": null,
+        "roadclassificationnumber": "A40",
+        "alternatename_lang": null,
+        "roadstructure": null,
+        "cyclefacility": null,
+        "cyclefacility_wholelink_nil": null,
+        "cyclefacility_wholelink_nilreason": null,
+        "commonID": "0d104ad1-6674-44c1-902d-d93327005a0a"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -0.103240315720057,
+              51.516677216346814
+            ],
+            [
+              -0.103266537895658,
+              51.51671907906693
+            ],
+            [
+              -0.103266822073027,
+              51.51671952430801
+            ],
+            [
+              -0.103353404323846,
+              51.516746553541374
+            ],
+            [
+              -0.104057335731818,
+              51.516966294564476
+            ],
+            [
+              -0.104286303452609,
+              51.5170059657542
+            ],
+            [
+              -0.104414444763888,
+              51.51704400742106
+            ],
+            [
+              -0.104519985575636,
+              51.517085874434954
+            ],
+            [
+              -0.104556243661894,
+              51.517100255170924
+            ],
+            [
+              -0.104726850647223,
+              51.517156968138835
+            ],
+            [
+              -0.104897458040042,
+              51.517213680744185
+            ],
+            [
+              -0.105068438994264,
+              51.51726140631261
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": "3564455",
+        "gml_id": "osgb4000000030239470",
+        "beginlifespanversion": "2017-09-16T00:00:00.000",
+        "localid": 4000000030239470,
+        "innetwork_href": "#OSHighwayNetwork",
+        "fictitious": "0",
+        "endnode_href": "#osgb4000000029972340",
+        "startnode_href": "#osgb4000000029972322",
+        "validfrom_nilreason": "unknown",
+        "validfrom_nil": "1",
+        "reasonforchange": "Modified Attributes",
+        "roadclassification": "A Road",
+        "routehierarchy": "A Road",
+        "formofway": "Dual Carriageway",
+        "trunkroad": "0",
+        "primaryroute": "0",
+        "roadname": "(1:Wormwood Street)",
+        "operationalstate": "Open",
+        "provenance": "OS Urban And Interpolated OS Height",
+        "directionality": "in opposite direction",
+        "length": 126.93,
+        "length_uom": "m",
+        "matchstatus": "Matched",
+        "alternateidentifier": "(2:5030_5330930181451,5030_5331560181439)",
+        "identifierscheme": "(2:NSG Elementary Street Unit ID (ESU ID),...)",
+        "startgradeseparation": 0,
+        "endgradeseparation": 0,
+        "elevationgain_indirection": 0.6,
+        "elevationgain_indirection_uom": "m",
+        "elevationgain_inoppositedirection": 0,
+        "elevationgain_inoppositedirection_uom": "m",
+        "relatedroadarea_href": "(4:#osgb1000001800468666,#osgb1000001802545562,#osgb1000001802545575,...)",
+        "formspartof_role": "(4:Road,Road,Street,Street)",
+        "formspartof_href": "(4:#osgb4000000030528163,#osgb4000000030943717,#usrn8100583,#usrn8100894)",
+        "roadwidth_averagewidth": 8.9,
+        "roadwidth_averagewidth_uom": "m",
+        "roadwidth_minimumwidth": null,
+        "roadwidth_minimumwidth_uom": null,
+        "roadwidth_confidencelevel": "OS Urban And Part Extent",
+        "roadname_lang": null,
+        "alternatename": null,
+        "roadclassificationnumber": "A1211",
+        "alternatename_lang": null,
+        "roadstructure": null,
+        "cyclefacility": null,
+        "cyclefacility_wholelink_nil": null,
+        "cyclefacility_wholelink_nilreason": null,
+        "commonID": "3400edb9-8d8a-4a42-89d7-43d75060da42"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -0.083558528104628,
+              51.51634526735024
+            ],
+            [
+              -0.083487867520238,
+              51.51633648592409
+            ],
+            [
+              -0.08344379071313,
+              51.51633100791129
+            ],
+            [
+              -0.083006737901461,
+              51.51627666534229
+            ],
+            [
+              -0.08208176317723,
+              51.516159238178325
+            ],
+            [
+              -0.081895273581359,
+              51.516138200396036
+            ],
+            [
+              -0.081766397958645,
+              51.516118105442665
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": "3564456",
+        "gml_id": "osgb4000000030239471",
+        "beginlifespanversion": "2017-09-16T00:00:00.000",
+        "localid": 4000000030239471,
+        "innetwork_href": "#OSHighwayNetwork",
+        "fictitious": "0",
+        "endnode_href": "#osgb4000000029972324",
+        "startnode_href": "#osgb4000000029972328",
+        "validfrom_nilreason": "unknown",
+        "validfrom_nil": "1",
+        "reasonforchange": "Modified Attributes",
+        "roadclassification": "A Road",
+        "routehierarchy": "A Road",
+        "formofway": "Dual Carriageway",
+        "trunkroad": "0",
+        "primaryroute": "0",
+        "roadname": "(1:Wormwood Street)",
+        "operationalstate": "Open",
+        "provenance": "OS Urban And Interpolated OS Height",
+        "directionality": "in opposite direction",
+        "length": 131.06,
+        "length_uom": "m",
+        "matchstatus": "Matched",
+        "alternateidentifier": "(1:5030_5331380181452)",
+        "identifierscheme": "(1:NSG Elementary Street Unit ID (ESU ID))",
+        "startgradeseparation": 0,
+        "endgradeseparation": 0,
+        "elevationgain_indirection": 0,
+        "elevationgain_indirection_uom": "m",
+        "elevationgain_inoppositedirection": 0.7,
+        "elevationgain_inoppositedirection_uom": "m",
+        "relatedroadarea_href": "(4:#osgb1000001800469046,#osgb1000001800469060,#osgb1000001802545562,...)",
+        "formspartof_role": "(4:Road,Road,Street,Street)",
+        "formspartof_href": "(4:#osgb4000000030528163,#osgb4000000030943717,#usrn8100583,#usrn8100894)",
+        "roadwidth_averagewidth": 8.1,
+        "roadwidth_averagewidth_uom": "m",
+        "roadwidth_minimumwidth": 7.2,
+        "roadwidth_minimumwidth_uom": "m",
+        "roadwidth_confidencelevel": "OS Urban And Part Extent",
+        "roadname_lang": null,
+        "alternatename": null,
+        "roadclassificationnumber": "A1211",
+        "alternatename_lang": null,
+        "roadstructure": null,
+        "cyclefacility": null,
+        "cyclefacility_wholelink_nil": null,
+        "cyclefacility_wholelink_nilreason": null,
+        "commonID": "959f2386-59a9-4366-b7b9-fbd40d5a81f9"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -0.081676955227963,
+              51.516188582858234
+            ],
+            [
+              -0.082092389901429,
+              51.516249339079884
+            ],
+            [
+              -0.082966740968303,
+              51.516358662911706
+            ],
+            [
+              -0.082970850824876,
+              51.516358271518236
+            ],
+            [
+              -0.083419001145829,
+              51.51641265184175
+            ],
+            [
+              -0.083455612270469,
+              51.516417090507076
+            ],
+            [
+              -0.083526324485924,
+              51.51642567495761
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": "3351669",
+        "gml_id": "osgb4000000030239668",
+        "beginlifespanversion": "2017-07-22T00:00:00.000",
+        "localid": 4000000030239668,
+        "innetwork_href": "#OSHighwayNetwork",
+        "fictitious": "0",
+        "endnode_href": "#osgb4000000029972683",
+        "startnode_href": "#osgb4000000029972703",
+        "validfrom_nilreason": "unknown",
+        "validfrom_nil": "1",
+        "reasonforchange": "Modified Geometry",
+        "roadclassification": "Unclassified",
+        "routehierarchy": "Local Road",
+        "formofway": "Single Carriageway",
+        "trunkroad": "0",
+        "primaryroute": "0",
+        "roadname": "(1:Aylesbury Street)",
+        "operationalstate": "Open",
+        "provenance": "OS Urban And OS Height",
+        "directionality": "in direction",
+        "length": 83.18,
+        "length_uom": "m",
+        "matchstatus": "Matched",
+        "alternateidentifier": "(2:5570_5316110182197,5570_5316440182224)",
+        "identifierscheme": "(2:NSG Elementary Street Unit ID (ESU ID),...)",
+        "startgradeseparation": 0,
+        "endgradeseparation": 0,
+        "elevationgain_indirection": 0,
+        "elevationgain_indirection_uom": "m",
+        "elevationgain_inoppositedirection": 0.5,
+        "elevationgain_inoppositedirection_uom": "m",
+        "relatedroadarea_href": "(3:#osgb1000001800036951,#osgb1000001800037033,#osgb1000001802542981)",
+        "formspartof_role": "(2:Road,Street)",
+        "formspartof_href": "(2:#osgb4000000030527899,#usrn21604170)",
+        "roadwidth_averagewidth": 6.9,
+        "roadwidth_averagewidth_uom": "m",
+        "roadwidth_minimumwidth": 5.6,
+        "roadwidth_minimumwidth_uom": "m",
+        "roadwidth_confidencelevel": "OS Urban And Full Extent",
+        "roadname_lang": null,
+        "alternatename": null,
+        "roadclassificationnumber": null,
+        "alternatename_lang": null,
+        "roadstructure": null,
+        "cyclefacility": null,
+        "cyclefacility_wholelink_nil": null,
+        "cyclefacility_wholelink_nilreason": null,
+        "commonID": "e2fdfea3-dfa4-439e-9a60-d9c9a063fbd9"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              -0.103575220492205,
+              51.523712057843596
+            ],
+            [
+              -0.104100310917402,
+              51.52347333421541
+            ],
+            [
+              -0.104148254513054,
+              51.523451537209844
+            ],
+            [
+              -0.104251335857231,
+              51.52339924650107
+            ],
+            [
+              -0.104472712678917,
+              51.523275423349496
+            ],
+            [
+              -0.104516987749282,
+              51.52325066226066
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
