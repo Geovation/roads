@@ -13,7 +13,7 @@
           "oneway": "yes",
           "surface": "paving_stones"
         },
-        "commonID": "b6d54021-64f7-44c7-b35a-e9210a52c725"
+        "commonID": "6696c311-c148-4c22-9172-c88aa46cd1e3"
       },
       "geometry": {
         "type": "LineString",
@@ -114,7 +114,7 @@
           "sidewalk": "left",
           "surface": "asphalt"
         },
-        "commonID": "346aac18-3395-4b69-99c7-e8320c940ba9"
+        "commonID": "5250319f-d16b-43e7-9d6f-1b8f1751ffbb"
       },
       "geometry": {
         "type": "LineString",
@@ -166,7 +166,7 @@
           "sidewalk": "left",
           "surface": "asphalt"
         },
-        "commonID": "346aac18-3395-4b69-99c7-e8320c940ba9"
+        "commonID": "5250319f-d16b-43e7-9d6f-1b8f1751ffbb"
       },
       "geometry": {
         "type": "LineString",
@@ -215,7 +215,7 @@
           "sidewalk": "left",
           "surface": "asphalt"
         },
-        "commonID": "f7f3cb74-b5b9-4ffb-b52a-b0e9d6e196b9"
+        "commonID": "0d104ad1-6674-44c1-902d-d93327005a0a"
       },
       "geometry": {
         "type": "LineString",
@@ -267,7 +267,7 @@
           "sidewalk": "left",
           "surface": "asphalt"
         },
-        "commonID": "f7f3cb74-b5b9-4ffb-b52a-b0e9d6e196b9"
+        "commonID": "0d104ad1-6674-44c1-902d-d93327005a0a"
       },
       "geometry": {
         "type": "LineString",
@@ -315,7 +315,7 @@
           "source:name": "local knowledge",
           "surface": "asphalt"
         },
-        "commonID": "da0f0fbd-48db-4624-a334-d574e5f87793"
+        "commonID": "3400edb9-8d8a-4a42-89d7-43d75060da42"
       },
       "geometry": {
         "type": "LineString",
@@ -347,6 +347,169 @@
           [
             -0.0816722,
             51.5161785
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "300862997",
+        "name": "Wormwood Street",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "ref": "A1211",
+          "sidewalk": "left",
+          "surface": "asphalt"
+        },
+        "commonID": "959f2386-59a9-4366-b7b9-fbd40d5a81f9"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.0817408,
+            51.5161129
+          ],
+          [
+            -0.0819065,
+            51.5161327
+          ],
+          [
+            -0.0826635,
+            51.5162232
+          ],
+          [
+            -0.0828884,
+            51.5162501
+          ],
+          [
+            -0.083431,
+            51.516322
+          ],
+          [
+            -0.0835633,
+            51.5163762
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "413107094",
+        "name": "Wormwood Street",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "ref": "A1211",
+          "source:name": "local knowledge",
+          "surface": "asphalt"
+        },
+        "commonID": "959f2386-59a9-4366-b7b9-fbd40d5a81f9"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.0816722,
+            51.5161785
+          ],
+          [
+            -0.0815187,
+            51.5161619
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "534609009",
+        "name": "Wormwood Street",
+        "highway": "primary",
+        "z_order": 7,
+        "other_tags": {
+          "lit": "yes",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "ref": "A1211",
+          "sidewalk": "left",
+          "source:name": "local knowledge",
+          "surface": "asphalt"
+        },
+        "commonID": "959f2386-59a9-4366-b7b9-fbd40d5a81f9"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.0816722,
+            51.5161785
+          ],
+          [
+            -0.0816252,
+            51.5161655
+          ],
+          [
+            -0.0816039,
+            51.5161469
+          ],
+          [
+            -0.081599,
+            51.5161243
+          ],
+          [
+            -0.0815975,
+            51.5161174
+          ],
+          [
+            -0.081611,
+            51.516091
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": "3755162",
+        "name": "Aylesbury Street",
+        "highway": "unclassified",
+        "z_order": 3,
+        "other_tags": {
+          "abutters": "mixed",
+          "maxspeed": "20 mph",
+          "oneway": "yes",
+          "surface": "asphalt"
+        },
+        "commonID": "e2fdfea3-dfa4-439e-9a60-d9c9a063fbd9"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -0.102875,
+            51.5239902
+          ],
+          [
+            -0.1035638,
+            51.523701
+          ],
+          [
+            -0.1040557,
+            51.5234627
+          ],
+          [
+            -0.1045539,
+            51.5231811
           ]
         ]
       }
