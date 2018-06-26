@@ -37,3 +37,9 @@ node comparator.js
 ```
 
 Once you have run this, you will begin to see output displayed in the terminal as the script iterates through the OS Roads and displays possible road matches found in the OSM Data set. These results will also be saved into an output file saved in your **Output** folder.
+
+You will now have two files in your **Output** folder that contain matched roads between the two data sets with unique IDs. You can now use the script `direction.js` in order to compare these matched roads and determine whether the direction of traffic is the same way. You can edit the config settings for this script in the `direction-config.json` file. Once this file has been configured, you can run the following command in your terminal, when in the root directory.
+
+```
+node direction.js
+```

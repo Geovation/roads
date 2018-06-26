@@ -13,6 +13,18 @@ if (!uploadFile) {
 
 //Function for filtering out bi-directional roads
 isOneWay = (road) => {
+
+  if
+  (
+    road.properties.highway === "pedestrian" ||
+    road.properties.highway === "path" ||
+    road.properties.highway === "cycleway" ||
+    road.properties.highway === "footway"
+  )
+  {
+    return false;
+  }
+
   if (road.properties.other_tags) {
     return road.properties.other_tags.oneway === "yes";
   } else {
