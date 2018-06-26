@@ -115,10 +115,9 @@ createOutputFiles().then((res) => {
       })
       console.log("=============================================");
       console.log(`${segmentsSkipped}/${matchingRoads.length} roads skipped. ${segmentsMatched}/${matchingRoads.length} roads matched.`);
-      console.log(`=> Matched Segments: ${Math.floor(segmentsMatched/matchingRoads.length)*100}%.`);
+      console.log(`=> Matched Segments: ${Math.floor((segmentsMatched/matchingRoads.length)*100)}%.`);
       console.log("=============================================\n\n");
-      // console.log("\n\n");
-
+      
 
       ////// Output File Formatting ////////
       if (((segmentsMatched/matchingRoads.length)*100)<60) { //if over 60% of segments have matched
