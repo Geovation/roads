@@ -1,6 +1,6 @@
 ## Synopsis
 
-Recording and maintaining the correct direction of traffic for oneway roads is important for routing, and needs to be monitored. The current process for validating the direction is a manual approach, which results in a slow, time-consuming update process where the majority of surveyors will be sent to random locations in order to determine if the directions are valid, most of which will already be correct. There is a clear need for a better suited detection system, to reduce wasted time caused by sending surveyors to locations where the directions of roads are likely already correct.
+Recording and maintaining the correct direction of traffic for oneway roads is important for routing, and needs to be monitored. The current process for validating the direction is a manual approach, which results in a slow, time-consuming update process where the majority of surveyors will be sent to random locations in order to determine if the directions are valid, most of which will already be correct. There is a clear need for a better suited detection system to reduce wasted time caused by sending surveyors to locations where the directions of roads are likely already correct.
 
 ## Proposal
 
@@ -43,7 +43,7 @@ node comparator.js
 ```
 Once you have run this, you will begin to see output displayed in the terminal as the script iterates through the OS Roads and displays possible road matches found in the OSM Data set. These results will also be saved into an output file saved in your **Output** folder. Once the script has finished running, you can move onto the final step.
 
-5. You will now have two files in your **Output** folder that contain matched roads between the two data sets with unique IDs. You can now use the script `direction.js` in order to compare these matched roads and determine whether the direction of traffic is the same way. You can edit the config settings for this script in the `direction-config.json` file. Once this file has been configured, you can run the following command in your terminal, when in the root directory.
+5. You will now have two files in your **Output** folder that contain matched roads between the two data sets with unique IDs. You can now use the script `direction.js` to compare these matched roads and determine whether the direction of traffic is the same. You can edit the config settings for this script in the `direction-config.json` file. Once this file has been configured, you can run the following command in your terminal, when in the root directory.
 ```
 node direction.js
 ```
