@@ -104,7 +104,7 @@ createOutputFiles().then((res) => {
         let diff = Math.abs(osBearing-osmBearing) % 360; //calculate difference between bearing angles
         let difference = diff > 180 ? 360 - diff : diff;
 
-        if (osBearing === 0 || difference > 90) { //if clipped line is invalid or difference is over 90 deg
+        if (osBearing === 0 || difference > 60) { //if clipped line is invalid or difference is over 90 deg
           segmentsSkipped++; //count segment as invalid and skip
         } else {
           segmentsMatched++; //count segment as a valid match
@@ -117,10 +117,10 @@ createOutputFiles().then((res) => {
       console.log(`${segmentsSkipped}/${matchingRoads.length} roads skipped. ${segmentsMatched}/${matchingRoads.length} roads matched.`);
       console.log(`=> Matched Segments: ${Math.floor((segmentsMatched/matchingRoads.length)*100)}%.`);
       console.log("=============================================\n\n");
-      
+
 
       ////// Output File Formatting ////////
-      if (((segmentsMatched/matchingRoads.length)*100)<60) { //if over 60% of segments have matched
+      if (((segmentsMatched/matchingRoads.length)*100)<60) { //if under 60% of segments have matched
         let newDataOS = JSON.parse(fs.readFileSync(config.outputFile).toString()); //read OS output file
         newDataOS.roads.push(dataOS.roads[i]); //push to the existing data
         fs.writeFileSync(config.outputFile, JSON.stringify(newDataOS, null, 2)); //write back to file

@@ -1,7 +1,6 @@
 const fs = require('fs');
 const util = require('util');
 const process = require('process');
-const _ = require('lodash/core');
 
 const uploadFile = process.argv[2]; //get upload file from cmd arguments
 const outputFile = process.argv[3]; //upload new file with filtered data
@@ -16,17 +15,18 @@ isOneWay = (road) => {
 
   if
   (
-    road.properties.highway === "pedestrian" ||
-    road.properties.highway === "path" ||
-    road.properties.highway === "cycleway" ||
-    road.properties.highway === "footway"
+    road.properties.highway === "pedestrian" || //filter out pedestrian pathways
+    road.properties.highway === "path" || //filter out pathways
+    road.properties.highway === "cycleway" || //filter out cycle lanes
+    road.properties.highway === "footway" //filter out foot paths
   )
   {
     return false;
   }
 
   if (road.properties.other_tags) {
-    return road.properties.other_tags.oneway === "yes";
+    //filter out oneway roads and exclude segrated lanes (joint cycle lanes)
+    return road.properties.other_tags.oneway === "yes" || road.properties.other_tags.segregated === "yes";
   } else {
     return false;
   }
