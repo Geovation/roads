@@ -33,7 +33,7 @@ There is a general work flow you can follow to get to the point of comparing roa
 
 1. The first step is to collect your data. OS data can be downloaded/purchased from the official [website](https://www.ordnancesurvey.co.uk/business-and-government/products/os-mastermap-highways-network.html) in formats including GML. OSM data can be collected in a number of ways, the method we will focus on is through the website [geofabrik](http://download.geofabrik.de/). From here you can download data for entire countries or cities, in an OSM file format. Once you have downloaded and unzipped your data, you can move onto the next step.
 
-2. Once you have your data files, you can place these in the `Data` directory. Once there, you can follow the instructions displayed in the `Data` directory's `README.md` file in order to convert your files into JSON format. Once your files have been successfully converted, you can move onto the next step.
+2. Once you have your data files, you can place these in the `Data` directory. Once there, you can follow the instructions displayed in the `Data` directory's `README.md` file in order to convert your files into JSON format and with a correct coordinate projection. Once your files have been successfully converted, you can move onto the next step.
 
 3. Now that you have your data files in a parsable format, you can follow the instructions in the `FileParser` directory's `README.md` file on how to run the command to extract all of the oneway roads from your data sets. Once you have successfully run the command and filtered your data, you can move onto the next step.
 

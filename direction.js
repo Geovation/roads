@@ -14,7 +14,7 @@ readFile = (path) => {
   return fs.readFileAsync(path); //return file data
 }
 
-//Extract data from file
+//Write data to file
 writeFile = (path, data) => {
   return fs.writeFileAsync(path, data); //return file data
 }

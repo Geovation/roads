@@ -15,7 +15,7 @@ readFile = (path) => {
   return fs.readFileAsync(path); //return file data
 }
 
-//Extract data from file
+//Write data to file
 writeFile = (path, data) => {
   return fs.writeFileAsync(path, data); //return file data
 }
@@ -65,29 +65,37 @@ compareRoadsForOverlap = (road1, road2) => {
 }
 
 //Find the distance between the start and end coordinates of the two roads
+//*Used for filtering out possible roads with the same name but going in opposite direction*
 compareStartAndFinish = (road1, road2) => {
-  //OS coordinates
-  let startOS,
-      endOS = "";
 
-  //If the OS road follows the direction of it's coordinates
-  if (road1.properties.directionality === "in direction") {
-    startOS = road1.geometry.coordinates[0][0]; //start is first coordinate
-    endOS = road1.geometry.coordinates[0][road1.geometry.coordinates[0].length-1]; //end is last coordinate
-  } else { //otherwise direction is against coordinates
-    startOS = road1.geometry.coordinates[0][road1.geometry.coordinates[0].length-1]; //start is last coordinate
-    endOS = road1.geometry.coordinates[0][0]; //end is first coordinate
+    //if roads are the same length within a tolerance of 50m
+    if (Math.abs(turf.length(road1)-(turf.length(road2)))< 0.05) {
+
+      //OS coordinates
+      let startOS,
+          endOS = "";
+
+      //If the OS road follows the direction of it's coordinates
+      if (road1.properties.directionality === "in direction") {
+        startOS = road1.geometry.coordinates[0][0]; //start is first coordinate
+        endOS = road1.geometry.coordinates[0][road1.geometry.coordinates[0].length-1]; //end is last coordinate
+      } else { //otherwise direction is against coordinates
+        startOS = road1.geometry.coordinates[0][road1.geometry.coordinates[0].length-1]; //start is last coordinate
+        endOS = road1.geometry.coordinates[0][0]; //end is first coordinate
+      }
+
+      //OSM coordinates
+      const startOSM = road2.geometry.coordinates[0]; //start is first coordinate
+      const endOSM = road2.geometry.coordinates[road2.geometry.coordinates.length-1]; //end is last coordinate
+
+      const tolerance = turf.length(road1)/2; //tolerance is half of the OS road length
+      const startDiff = turf.distance(startOS, startOSM); //distance between both start coordinates
+      const endDiff = turf.distance(endOS, endOSM); //distance between both end coordinates
+
+      return !((startDiff > tolerance) && (endDiff > tolerance)); //are both distances within the tolerance
+  } else {
+    return true;
   }
-
-  //OSM coordinates
-  const startOSM = road2.geometry.coordinates[0]; //start is first coordinate
-  const endOSM = road2.geometry.coordinates[road2.geometry.coordinates.length-1]; //end is last coordinate
-
-  const tolerance = turf.length(road1)/2; //tolerance is half of the OS road length
-  const startDiff = turf.distance(startOS, startOSM); //distance between both start coordinates
-  const endDiff = turf.distance(endOS, endOSM); //distance between both end coordinates
-
-  return !((startDiff > tolerance) && (endDiff > tolerance)); //are both distances within the tolerance
 }
 
 // === Start comparing data sets ===
@@ -123,9 +131,7 @@ createOutputFiles().then((res) => {
       }
 
       //level 2 filter - check to see if first and last coords are within tolerance distance of each other
-      overlaps.map((road) => {
-        clipped = overlaps.filter(road => compareStartAndFinish(dataOS.roads[i], road));
-      })
+      clipped = overlaps.filter(road => compareStartAndFinish(dataOS.roads[i], road));
 
       // level 3 filter - check to see if road name strings are over 70% match
       if (roadOSName) {
@@ -142,8 +148,6 @@ createOutputFiles().then((res) => {
       } else {
         nameMatches = clipped;
       }
-
-
 
       //////// Output File Formatting ////////
       if (nameMatches.length > 0) { //if there are any matches append to file
@@ -162,7 +166,6 @@ createOutputFiles().then((res) => {
         fs.writeFileSync(config.outputFileOSM, JSON.stringify(newDataOSM, null, 2)); //write back to file
       }
       //////// End of Output File Formatting ////////
-
 
 
       //////// Console Output Formatting ////////
