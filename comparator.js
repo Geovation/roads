@@ -49,7 +49,7 @@ compareRoadsForOverlap = (road1, road2) => {
 
   const turfRoad1 = turf.lineString(road1.geometry.coordinates[0]); //convert OS road to turf linestring
   const turfRoad2 = turf.lineString(road2.geometry.coordinates); //convert OSM road to turf linestring
-  const buffer = turf.buffer(turfRoad1, 0.025); //buffer the OS road by 50 metres
+  const buffer = turf.buffer(turfRoad1, 0.025); //buffer the OS road by 25 metres
 
   const intersect = turf.lineIntersect(buffer, turfRoad2); //Check for intersections
 

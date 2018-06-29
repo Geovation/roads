@@ -70,7 +70,7 @@ createOutputFiles().then((res) => {
 
       // for every OSM road
       for (var j = 0; j < dataOSM.roads.length; j++) {
-        const roadOSM = turf.flip(dataOSM.roads[j]);
+        const roadOSM = turf.flip(dataOSM.roads[j]); //get coordinates into correct order [lat, long]
         //find matching road segments
         if (roadOS.properties.commonID === roadOSM.properties.commonID) {
           matchingRoads.push(roadOSM); //add matching road segment to array
@@ -91,8 +91,8 @@ createOutputFiles().then((res) => {
         const line = turf.lineString(roadOS.geometry.coordinates[0]); //convert OS road to line
         const trimLine = turf.lineSlice(first, last, line); //trim OS line to length of OSM segment
 
-        let osBearing = 0;
-        let osmBearing = 0;
+        let osBearing = 0; //angle bearing from 1st to last coord of OS road
+        let osmBearing = 0; //angle bearing from 1st to last coord of OSM road
 
         if (roadOS.properties.directionality === "in direction") { //if road is in same direction
           osBearing = bearing(trimLine, true);
