@@ -19,7 +19,7 @@ writeFile = (path, data) => {
   return fs.writeFileAsync(path, data); //return file data
 }
 
-//Extract data from each file
+//Extract data from each file BKA BKA BKA
 readAllFiles = () => {
   var promises = [];
   promises.push(readFile(config.inputFileOS)); //read in OS file first
