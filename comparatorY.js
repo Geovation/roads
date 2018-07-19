@@ -69,7 +69,7 @@ createOutputFiles().then((res) => {
       }
 
       let roadOSMName;
-      let numOfMatches = 0;
+      let onlyNameMatches = refinedCoordinatesMatch = 0;
 
       // for every OSM road
       for (var j = 0; j < numOfRoadsOSM; j++) {
@@ -77,8 +77,9 @@ createOutputFiles().then((res) => {
         roadOSMName = dataOSM.features[j].properties.name ? dataOSM.features[j].properties.name.toLowerCase() : "";
 
         if ((roadOSName == roadOSMName) && (roadOSName != "")){
-          numOfMatches++;
+          onlyNameMatches ++;
           compareRoadsForOverlap(dataOS.features[i], dataOSM.features[j]);
+          refinedCoordinatesMatch ++;
           // find oneway tag and extract it from the string "other_tags" in OSM JSON data
           if(dataOSM.features[j].properties.other_tags && isOnewayOS){
             let index = dataOSM.features[j].properties.other_tags.search("oneway");
@@ -97,7 +98,7 @@ createOutputFiles().then((res) => {
         }
       }
 
-      switch(numOfMatches){
+      switch(onlyNameMatches){
         case 0:
           zeroCounter++;
           break;
@@ -111,14 +112,14 @@ createOutputFiles().then((res) => {
             noNameCounter++;
           }
         }
-        console.log("Number of matches of segment " + roadOSName.toUpperCase() + " from OS are " + numOfMatches + " in OSM");
+        console.log("Number of matches of segment " + roadOSName.toUpperCase() + " from OS are " + onlyNameMatches + " in OSM");
         console.log(dataOS.features[i].properties.gml_id);
       }
       console.log("Number of roads from OS with NO match in OSM: \t\t" + zeroCounter);
       console.log("Number of roads from OS with ONE match in OSM: \t\t" + oneCounter);
       console.log("Number of roads from OS with MULTIPLE match in OSM: \t" + multiCounter);
       console.log("Number of roads without a name in OS: \t\t\t" + noNameCounter);
-console.log("OS: " + numOfRoadsOS + "  OSM: " +  numOfRoadsOSM);
+console.log("Total numer of roads in OS are: " + numOfRoadsOS + ", and in OSM are: " +  numOfRoadsOSM);
   });
 });
 
@@ -156,5 +157,9 @@ compareRoadsForOverlap = (road1, road2) => {
     const turfRoad1 = turf.lineString(road1.geometry.coordinates); //convert OS road to turf linestring
     const turfRoad2 = turf.lineString(road2.geometry.coordinates); //convert OSM road to turf linestring
     console.log( turf.lineOverlap(turfRoad1, turfRoad2, {tolerance: 0.01}).features.length + "    " + road2.properties.osm_id);
+    if(turf.lineOverlap(turfRoad1, turfRoad2, {tolerance: 0.01}).features.length > 0){
+      return true;
+    }
   }
+  return false;
 }
