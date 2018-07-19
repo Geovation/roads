@@ -47,7 +47,7 @@ createOutputFiles().then((res) => {
 
     const numOfRoadsOS = dataOS.features.length; //number of OS roads to check
     const numOfRoadsOSM = dataOSM.features.length; //number of OS roads to check
-    console.log(numOfRoadsOS + "  " + numOfRoadsOSM);
+
     let numOfRoadsChecked = 0; //number of OS roads that have been checked
     let zeroCounter = oneCounter = multiCounter = noNameCounter = 0;
     let onewayCounterOS = onewayCounterOSM = directionMatches = 0;
@@ -69,7 +69,7 @@ createOutputFiles().then((res) => {
       }
 
       let roadOSMName;
-      let onlyNameMatches = refinedCoordinatesMatch = 0;
+      let matchNameCounter = matchCoordinatesCounter = 0;
 
       // for every OSM road
       for (var j = 0; j < numOfRoadsOSM; j++) {
@@ -77,9 +77,10 @@ createOutputFiles().then((res) => {
         roadOSMName = dataOSM.features[j].properties.name ? dataOSM.features[j].properties.name.toLowerCase() : "";
 
         if ((roadOSName == roadOSMName) && (roadOSName != "")){
-          onlyNameMatches ++;
-          compareRoadsForOverlap(dataOS.features[i], dataOSM.features[j]);
-          refinedCoordinatesMatch ++;
+          matchNameCounter ++;
+          if (compareRoadsForOverlap(dataOS.features[i], dataOSM.features[j])){
+            matchCoordinatesCounter ++;
+          }
           // find oneway tag and extract it from the string "other_tags" in OSM JSON data
           if(dataOSM.features[j].properties.other_tags && isOnewayOS){
             let index = dataOSM.features[j].properties.other_tags.search("oneway");
@@ -92,28 +93,31 @@ createOutputFiles().then((res) => {
               if(Math.abs(directionAngleOS - directionAngleOSM) < 20){
                 directionMatches ++;
               }
-              console.log(roadOSMName + "  " + directionAngleOSM);
+              //console.log(roadOSMName + "   uuuuu  " + directionAngleOSM);
             }
           }
         }
       }
-
-      switch(onlyNameMatches){
-        case 0:
-          zeroCounter++;
-          break;
-        case 1:
-          oneCounter++;
-          break;
-        default:
-          if (roadOSName != "" ){
+      let matchFilter = matchCoordinatesCounter;
+      if (roadOSName != "" ){
+        switch(matchFilter){
+          case 0:
+            zeroCounter++;
+            break;
+          case 1:
+            oneCounter++;
+            break;
+          default:
             multiCounter++;
-          } else {
-            noNameCounter++;
           }
+        } else {
+          noNameCounter++;
         }
-        console.log("Number of matches of segment " + roadOSName.toUpperCase() + " from OS are " + onlyNameMatches + " in OSM");
+        if(roadOSName == "curzon street"){
+        console.log("Number of matches by name of segment " + roadOSName.toUpperCase() + " from OS are " +
+          matchNameCounter + " in OSM, and when filtering with coordinates is " + matchCoordinatesCounter);
         console.log(dataOS.features[i].properties.gml_id);
+        }
       }
       console.log("Number of roads from OS with NO match in OSM: \t\t" + zeroCounter);
       console.log("Number of roads from OS with ONE match in OSM: \t\t" + oneCounter);
@@ -156,8 +160,9 @@ compareRoadsForOverlap = (road1, road2) => {
   if((road1.geometry.coordinates != NaN) & (road2.geometry.coordinates != NaN)){
     const turfRoad1 = turf.lineString(road1.geometry.coordinates); //convert OS road to turf linestring
     const turfRoad2 = turf.lineString(road2.geometry.coordinates); //convert OSM road to turf linestring
+
     console.log( turf.lineOverlap(turfRoad1, turfRoad2, {tolerance: 0.01}).features.length + "    " + road2.properties.osm_id);
-    if(turf.lineOverlap(turfRoad1, turfRoad2, {tolerance: 0.01}).features.length > 0){
+    if(turf.lineOverlap(turfRoad1, turfRoad2, {tolerance: 0.004}).features.length > 0){
       return true;
     }
   }
