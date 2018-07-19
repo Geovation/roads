@@ -7,6 +7,9 @@ const StringSimilarity = require('string-similarity');
 const uuidv4 = require('uuid/v4');
 const config = require('./comparator-config.json');
 
+/** asdasdasd
+**/
+
 let dataOS,
     dataOSM = [];
 
