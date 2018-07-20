@@ -3,9 +3,8 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const config = require('./comparator-config.json');
 
-let dataOS,
-    dataOSM = [];
-
+let dataOS, dataOSM, matchedData = [];
+let roadMatchesInOSM = [];
 // === Extract data from file ===========================
 readFile = (path) => {
   return fs.readFileAsync(path); //return file data
@@ -29,8 +28,7 @@ createOutputFiles = () => {
   var promises = [];
 
   if (config.outputMode === "new") { //if user wants new output files
-    promises.push(writeFile(config.outputFileOS, JSON.stringify({"roads": []}, null, 2)));
-    promises.push(writeFile(config.outputFileOSM, JSON.stringify({"roads": []}, null, 2)));
+    promises.push(writeFile(config.outputFile, JSON.stringify({"roads": []}, null, 2)));
     return Promise.all(promises); //create new output files
   } else if (config.outputMode === "append"){
     return Promise.resolve(true); // else files already exist
@@ -42,129 +40,103 @@ createOutputFiles = () => {
 // === Start comparing data sets ======================
 createOutputFiles().then((res) => {
   readAllFiles().then((res) => {
+
     dataOS = JSON.parse(res[0].toString()); //parse OS data
     dataOSM = JSON.parse(res[res.length-1].toString()); //parse OSM data
 
     const numOfRoadsOS = dataOS.features.length; //number of OS roads to check
     const numOfRoadsOSM = dataOSM.features.length; //number of OS roads to check
 
-    let numOfRoadsChecked = 0; //number of OS roads that have been checked
+    console.log("Total numer of roads in OS are: " + numOfRoadsOS + ", and in OSM are: " +  numOfRoadsOSM);
+
+    // counters for number of road matches
     let zeroCounter = oneCounter = multiCounter = noNameCounter = 0;
-    let onewayCounterOS = onewayCounterOSM = directionMatches = 0;
-    let isOnewayOSM;
 
-    // for every OS road
+    // for loop OS road
     for (var i = 0; i < numOfRoadsOS; i++) {
-      let isOnewayOS = false;
-      let roadOSName = dataOS.features[i].properties.roadname ? dataOS.features[i].properties.roadname : "";
-      roadOSName = roadOSName.slice(3,roadOSName.length-1).toLowerCase();
-      let direction = dataOS.features[i].properties.directionality ? dataOS.features[i].properties.directionality : "";
-      if(direction.slice(0,1) == "in"){
-        onewayCounterOS ++;
-        isOnewayOS = true;
-        let directionAngleOS = onewayDirection(dataOS.features[i].properties.geometry.coordinates);
-        if(dataOS.features[i].properties.directionality == "in opposite direction"){
-          directionAngleOS += 180;
-        }
-      }
-
-      let roadOSMName;
-      let matchNameCounter = matchCoordinatesCounter = 0;
-
-      // for every OSM road
-      for (var j = 0; j < numOfRoadsOSM; j++) {
-        // extract street name in OSM data
-        roadOSMName = dataOSM.features[j].properties.name ? dataOSM.features[j].properties.name.toLowerCase() : "";
-
-        if ((roadOSName == roadOSMName) && (roadOSName != "")){
-          matchNameCounter ++;
-          if (compareRoadsForOverlap(dataOS.features[i], dataOSM.features[j])){
-            matchCoordinatesCounter ++;
-          }
-          // find oneway tag and extract it from the string "other_tags" in OSM JSON data
-          if(dataOSM.features[j].properties.other_tags && isOnewayOS){
-            let index = dataOSM.features[j].properties.other_tags.search("oneway");
-            //check if search finds "oneway" substring and if first letter is n or y for no and yes respectively.
-            if(index == -1 || dataOSM.features[j].properties.other_tags.charAt(index+10).toLowerCase() == "n"){
-              continue;  // if not oneway continue loop. This code should be manipulated when looking for other road properties.
-            } else if (dataOSM.features[j].geometry){
-              onewayCounterOSM ++;
-              let directionAngleOSM = onewayDirection(dataOSM.features[j].geometry.coordinates);
-              if(Math.abs(directionAngleOS - directionAngleOSM) < 20){
-                directionMatches ++;
-              }
-              //console.log(roadOSMName + "   uuuuu  " + directionAngleOSM);
-            }
-          }
-        }
-      }
-      let matchFilter = matchCoordinatesCounter;
-      if (roadOSName != "" ){
-        switch(matchFilter){
-          case 0:
-            zeroCounter++;
-            break;
-          case 1:
-            oneCounter++;
-            break;
-          default:
-            multiCounter++;
-          }
-        } else {
+      let roadOS = dataOS.features[i];
+      //compare retun number of matches
+      switch(compareRoadsName(roadOS, numOfRoadsOSM)){
+        case -1:
           noNameCounter++;
-        }
-        if(roadOSName == "curzon street"){
-        console.log("Number of matches by name of segment " + roadOSName.toUpperCase() + " from OS are " +
-          matchNameCounter + " in OSM, and when filtering with coordinates is " + matchCoordinatesCounter);
-        console.log(dataOS.features[i].properties.gml_id);
-        }
+          break;
+        case 0:
+          zeroCounter++;
+          break;
+        case 1:
+          oneCounter++;
+          writeOutput(matchedData, roadOS, roadMatchesInOSM);
+          break;
+        default:
+          multiCounter++;
+          writeOutput(matchedData, roadOS, roadMatchesInOSM);
       }
-      console.log("Number of roads from OS with NO match in OSM: \t\t" + zeroCounter);
-      console.log("Number of roads from OS with ONE match in OSM: \t\t" + oneCounter);
-      console.log("Number of roads from OS with MULTIPLE match in OSM: \t" + multiCounter);
-      console.log("Number of roads without a name in OS: \t\t\t" + noNameCounter);
-console.log("Total numer of roads in OS are: " + numOfRoadsOS + ", and in OSM are: " +  numOfRoadsOSM);
+    }
+    //write data to output file
+    fs.writeFileAsync( config.outputFile, JSON.stringify(matchedData, null, 2));
+    printReport(zeroCounter, oneCounter, multiCounter, noNameCounter);
   });
 });
 
-//  ==== Start finding Direction of oneway roads ==================
-onewayDirection = (roadCoordinates) => {
-  let index = roadCoordinates.length - 1;
-  let xDifference = roadCoordinates[index][0] - roadCoordinates[0][0];
-  let yDifference = roadCoordinates[index][1] - roadCoordinates[0][1];
-  let tanTheta = Math.atan(Math.abs(yDifference/xDifference));
-/*console.log("x:  " + roadCoordinates[index][0] +  "   "  + roadCoordinates[0][0]);
-console.log("y:  " + roadCoordinates[index][1] +  "   "  + roadCoordinates[0][1]);
-console.log(xDifference + "   " + yDifference);*/
-  switch(true){
-    case (xDifference >= 0 && yDifference >= 0):  //angle in 1st quadratic
-      return convertToDegree(tanTheta);
-      break;
-    case (xDifference < 0 && yDifference >= 0):  //angle in 2nd quadratic
-      return convertToDegree(Math.PI - tanTheta);
-      break;
-    case (xDifference < 0 && yDifference < 0):  //angle in 3rd quadratic
-      return convertToDegree(tanTheta - Math.PI);
-      break;
-    case (xDifference >= 0 && yDifference < 0):  //angle in 4th quadratic
-      return convertToDegree(-tanTheta);
-      break;
+//compare names of the roads for match betwwen OS and OSM
+compareRoadsName = (roadOS, numOfRoadsOSM) => {
+  let roadNameOS = roadOS.properties.roadname ? roadOS.properties.roadname : "";
+  roadNameOS = roadNameOS.slice(3,roadNameOS.length-1).toLowerCase();
+  let roadNameOSM;
+  let matchNameCounter = matchCoordinatesCounter = 0;
+
+  //if road has no name in OS then retrun without comparing
+  if (roadNameOS == ""){
+    return -1;
   }
+  roadMatchesInOSM = [];
+  // for loop every OSM road
+  for (var j = 0; j < numOfRoadsOSM; j++) {
+    // extract street name in OSM data
+    let roadOSM = dataOSM.features[j];
+    roadNameOSM = roadOSM.properties.name ? roadOSM.properties.name.toLowerCase() : "";
+    //comapre names of OS and OSM, increase NAME counter if matched
+    if (roadNameOS == roadNameOSM){
+      matchNameCounter ++;
+      //compare for overlap, increment COORDINATES counter if matched
+      if (compareRoadsForOverlap(roadOS, roadOSM)){
+        matchCoordinatesCounter ++;
+        roadMatchesInOSM.push(roadOSM.properties.osm_id);
+      }
+    }
+  }
+  //return number of road matches from OSM for every OS road
+  return matchCoordinatesCounter;
 }
 
-convertToDegree = (angle) => {
-  return angle * (180 / Math.PI);
-}
 
-compareRoadsForOverlap = (road1, road2) => {
-  if((road1.geometry.coordinates != NaN) & (road2.geometry.coordinates != NaN)){
-    const turfRoad1 = turf.lineString(road1.geometry.coordinates); //convert OS road to turf linestring
-    const turfRoad2 = turf.lineString(road2.geometry.coordinates); //convert OSM road to turf linestring
-
-    console.log( turf.lineOverlap(turfRoad1, turfRoad2, {tolerance: 0.01}).features.length + "    " + road2.properties.osm_id);
+//compare roads coordinates for overlap
+compareRoadsForOverlap = (roadOS, roadOSM) => {
+  if((roadOS.geometry.coordinates != NaN) & (roadOSM.geometry.coordinates != NaN)){
+    const turfRoad1 = turf.lineString(roadOS.geometry.coordinates); //convert OS road to turf linestring
+    const turfRoad2 = turf.lineString(roadOSM.geometry.coordinates); //convert OSM road to turf linestring
+    //comparing roard using turf built-in function lineOverlap with tolerance 4meters
+    //if length > 0 means there is match
     if(turf.lineOverlap(turfRoad1, turfRoad2, {tolerance: 0.004}).features.length > 0){
       return true;
     }
   }
   return false;
+}
+
+//write data to array then retrun for output file
+writeOutput = (array, roadOS, roadsOSM) => {
+  let data = [];
+  data[0] = roadOS.properties.roadname.slice(3,roadOS.properties.roadname.length-1);
+  data[1] = (roadOS.properties.localid).toString();
+  data[2] = roadsOSM;
+  array.push(data);
+}
+
+printReport = (zeroCounter, oneCounter, multiCounter, noNameCounter) => {
+  console.log("Number of roads from OS with NO match in OSM: \t\t" + zeroCounter);
+  console.log("Number of roads from OS with ONE match in OSM: \t\t" + oneCounter);
+  console.log("Number of roads from OS with MULTIPLE match in OSM: \t" + multiCounter);
+  console.log("Number of roads without a name in OS: \t\t\t" + noNameCounter);
+
 }
