@@ -21,6 +21,7 @@ let arrayOSM = [];
 //uncomment to initialise to use in code to write to file road matches
 //let roadMatchesInOSM, matchedData = [];
 let angleOS;
+
 // === Extract data from file ===========================
 readFile = (path) => {
   return fs.readFileAsync(path); //return file data
