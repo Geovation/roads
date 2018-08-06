@@ -1,9 +1,9 @@
 #Convert OS Data Steps:
 ##OS Data:
-When converting to JSON should choose the right layer by adding the world `roadlink` for OS data (and `lines` for OSM) to the end of the `org2org` command, the layer *roadlink* will be chosen as JSON file supports only one layer. 
+When converting to JSON should choose the right layer by adding the world `roadlink` for OS data (and `lines` for OSM) to the end of the `org2org` command, the layer *roadlink* will be chosen as JSON file supports only one layer.
 Download data from company website or server.
 In the terminal run following lines:
-To converts data to JSON format. 
+To converts data to JSON format.
 ```
 ogr2ogr -f GeoJSON "./output_file_name.json" "./input_file.ext" roadlink
 ```
@@ -26,17 +26,17 @@ highwaydedicated, ferry link, ferrynode, hazard, maintenance, reinstatement, res
 ##OSM Data:
 To convert OS data follow same as with OS Data steps but second step not required because OSM data is in EPSG 4326 projection system, in first step choose `lines` layer and not `roadlink` as OSM does not have the latter layer.
 
-##OSM roads: 
+##OSM roads:
 primary, primary_link, secondary, secondary_link, tertiary, tertiary_link, motorway, motorway_link, trunk, trunk_link, residential, service, living_street, unclassified.
 
 ##Filter OSM links:
-Using `ogr2ogr` command to define an SQL query which filters out unwanted links (water, tube, trains, pathway, cycle paths, etc..). 
+Using `ogr2ogr` command to define an SQL query which filters out unwanted links (water, tube, trains, pathway, cycle paths, etc..).
 ```
 ogr2ogr -f GeoJSON -sql "SELECT * FROM lines WHERE highway in ('motorway', 'trunk', 'motorway_link', 'trunk_link', 'tertiary', 'primary', 'secondary', 'tertiary_link', 'primary_link', 'secondary_link', 'residential', 'service', 'living_street', 'unclassified')" “./OutputFile.json” “./InputFile.json"
 ```
 
 ##For both files (OS and OSM) input files:
-When data converted to JSON, all coordinates should be of arrays of two element arrays (longitude and latitude). However in the conversion process some of the arrays have a sub arrays of coordinates. The user should transform the arrays to arrays of arrays with two elements. This is done by running the script `convertArray.js`. The input file should be typed in the `path = "./inputY/inputFile.json";` line of the script. The output will be the same file with the required format. This process should be run for both files to avoid the possibility of any incorrectly converted coordinates. This script improved to delete empty entries (coordinates of empty array) in features array because they cause errors when running `comparatorY.js` script. 
+When data converted to JSON, all coordinates should be of arrays of two element arrays (longitude and latitude). However in the conversion process some of the arrays have a sub arrays of coordinates. The user should transform the arrays to arrays of arrays with two elements. This is done by running the script `convertArray.js`. The input file should be typed in the `path = "./inputY/inputFile.json";` line of the script. The output will be the same file with the required format. This process should be run for both files to avoid the possibility of any incorrectly converted coordinates. This script improved to delete empty entries (coordinates of empty array) in features array because they cause errors when running `comparatorY.js` script.
 When running script `convetArray.js` for a file with large size, an error message is displayed:
 >FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
 The reason is Node JS default allocated memory is 512mb. The memory can be increased by running **node** command line as follows:
