@@ -5,13 +5,17 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 //this is the input file to be fixed
-path = "./InputY/codeOS12.json";
+path = "./InputY/londonOSM.json";
 
 //read data from input file and parse to JSON object
 data = JSON.parse(fs.readFileSync(path).toString());
 console.log("Data is read from file: " + path);
 //loop through all elements (features) in JSON data
 for (let i = 0; i < data.features.length; i++) {
+  // check if type is MultiLineString convert it to LineString
+  if (data.features[i].geometry.type == "MultiLineString"){
+    data.features[i].geometry.type = "LineString";
+  }
   //check if coordinates are empty delete entry
   if (data.features[i].geometry.coordinates.length == 0) {
     //delete element i form features
