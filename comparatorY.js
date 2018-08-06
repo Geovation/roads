@@ -91,8 +91,6 @@ createOutputFiles().then((res) => {
           //uncomment to write multi-match roads to file but change writeOutput
           //writeOutput(matchedData, roadOS, roadMatchesInOSM);
       }
-      //uncomment this line to show roads comapred progess on screen
-      console.log( "Progress: " + (i+1) + " of " + numOfRoadsOS);
     }
     //write data to output file
     //uncomment to write road matches array to file
