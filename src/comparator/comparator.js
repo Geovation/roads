@@ -12,19 +12,34 @@ loop = (input) => {
   let mismatch = [];
   let arrayOS = [];
   let arrayOSM = [];
-  //counter for number of [0, 1, Multi matchs & NoName roads] respectively
-  let roadCounter = [0, 0, 0, 0];
+
+  let roadProcessed = 0;
+  tempTime = new Date();
+  //counter for number
+  let roadCounter = {
+    noMatch: 0,
+    oneMatch: 0,
+    multiMatch: 0,
+    noName: 0,
+    roadsSkipped: 0,
+    totalRoadsProcceses: 0
+  };
+  console.log('\n\t***********************************');
+  const timerID = setInterval(console.log(roadCounter, ' time ', print.footer(tempTime)), 5000);
+
   [dataOS, dataOSM] = io.read(input[0], input[1]); //read input files
   if (!print.header(dataOS.features.length, dataOSM.features.length)) {
       throw 'ERROR! Input files length error.'
   }
   for (let roadOS of dataOS.features) { //loop through OS links
     if (!roadOS.properties.name) { //check if no name increment counter
-      roadCounter[3] ++;
+      // TODO: consider this case.
+      roadCounter.noName ++;
       continue;
     }
     let index = 0; //reset counter for number of matches
     for (let roadOSM of dataOSM.features) { //loop OSM links
+      roadCounter.totalRoadsProcceses++;
 
       // find 1 point in roadOSM
       const roadOSMPoint = roadOSM.geometry.coordinates[0];
@@ -33,7 +48,10 @@ loop = (input) => {
       // find distance
       const distance = turf.distance(roadOSPoint,roadOSMPoint);
       // ingore if longer than the longest segment
-      if (distance > 1) continue;
+      if (distance > 1) {
+        roadCounter.roadsSkipped++;
+        continue;
+      }
 
       // cleaning up OS names: removing 1.()
       const osName = roadOS.properties.name.slice(3, (roadOS.properties.name.length - 1))
@@ -53,11 +71,18 @@ loop = (input) => {
         }
       }
     }
-    if (index > 1) { //check link match counter if > 1
-      index = 2; // 2 refers to multimatch
+    if (index == 0) { //check link match counter if > 1
+      roadCounter.noMatch ++;
+    } else if (index == 1) {
+      roadCounter.oneMatch ++;
+    } else {
+      roadCounter.multiMatch ++;
     }
-    roadCounter[index] ++; //increment related (index) counter
   }
+
+
+  clearInterval(timerID);
+
   return [arrayOS, arrayOSM, mismatch, roadCounter];
 }
 
@@ -87,7 +112,6 @@ exports.start = (input, output, time = new Date()) => {
   });
 
   promise.then( (values) => { //call main function loop
-    console.log(values[3]);
     console.log('Writing data to files');
     //write data to files
     io.write(output[0], values[0]);
