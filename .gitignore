@@ -10,8 +10,6 @@ output/**/*
 temp/**/*
 test/io/testoutput.json
 
-old*.*
-
 # Don't ignore README.md and OSTN.... files
 
 !input/OSTN15_NTv2_OSGBtoETRS.gsb
