@@ -27,7 +27,13 @@ exports.report = (counter = []) => {
 
 exports.footer = (time = -1) => {
   if (time === -1) {
-    console.log('ERROR! time cannot be calcualted. No starting time (input) provided');
+    console.log('ERROR! time cannot be calcualted. No starting (input) time provided');
+    return false;
+  }
+  let duration = new Date() - time;
+  console.log('***************************************\n',duration);
+  if (duration < 0) {
+    console.log("ERROR! starting (input) time is greater than end (current) time.");
     return false;
   } else {
     console.log('\t\tTotal time taken: \t' + tm.format(new Date() - time) + '\n');

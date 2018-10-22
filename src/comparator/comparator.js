@@ -24,9 +24,10 @@ loop = (input) => {
     roadsSkipped: 0,
     totalRoadsProcceses: 0
   };
-  console.log('\n\t***********************************');
-  const timerID = setInterval(console.log(roadCounter, ' time ', print.footer(tempTime)), 5000);
 
+//console.log('\n\t***********************************');
+//const timerID = setInterval(() => console.log(roadCounter, ' time ', print.footer(tempTime)), 1000);
+  let i = 0;
   [dataOS, dataOSM] = io.read(input[0], input[1]); //read input files
   if (!print.header(dataOS.features.length, dataOSM.features.length)) {
       throw 'ERROR! Input files length error.'
@@ -39,7 +40,7 @@ loop = (input) => {
     }
     let index = 0; //reset counter for number of matches
     for (let roadOSM of dataOSM.features) { //loop OSM links
-      roadCounter.totalRoadsProcceses++;
+      roadCounter.totalRoadsProcceses ++;
 
       // find 1 point in roadOSM
       const roadOSMPoint = roadOSM.geometry.coordinates[0];
@@ -78,10 +79,13 @@ loop = (input) => {
     } else {
       roadCounter.multiMatch ++;
     }
+
+    if ( i++ % 100 == 0 ) {
+      console.log(roadCounter, ' time ', print.footer(tempTime));
+    }
   }
 
-
-  clearInterval(timerID);
+//clearInterval(timerID);
 
   return [arrayOS, arrayOSM, mismatch, roadCounter];
 }
