@@ -50,7 +50,7 @@ describe('distance.js finds if distance between statring points of two links if 
     assert.equal(expected, output);
   });
 
-  it('Test one input is missing. Return true', () => {
+  it('Test one input is missing. Return false', () => {
     const input1 = {"geometry": {"coordinates": [[0.13, 52],[0.1, 53], [0, 54]]}};
     const input2 = {"geometry": {"coordinates": [[0.131, 52],[0.1, 53], [0, 54]]}};;
     const expected = false;

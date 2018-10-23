@@ -53,4 +53,12 @@ describe('note-generator.js compare angle are in opposite direction with toleran
     const output = generator.generate(input3, input2);
     assert.equal(expected, output);
   });
+
+  it('Test first angle is not number. Return message', () => {
+    const input3 = NaN;
+    const input2 = NaN;
+    const expected = '';
+    const output = generator.generate(input3, input2);
+    assert.equal(expected, output);
+  });
 });
