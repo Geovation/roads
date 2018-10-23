@@ -31,46 +31,52 @@ loop = (input) => {
       roadCounter.noName ++;
       continue;
     }
-    let index = 0; //reset counter for number of matches
-    for (let roadOSM of dataOSM.features) { //loop OSM links
-      roadCounter.totalRoadsProcceses ++;
 
-      if (!distance.inRange(roadOS, roadOSM)) {
-        roadCounter.roadsSkipped++;
-        continue;
-      }
-
-      // cleaning up OS names: removing 1.()
-      const osName = roadOS.properties.name.slice(3, (roadOS.properties.name.length - 1))
-
-      if ( name.compare(osName, roadOSM.properties.name) ) { //comapre names of OS and OSM
-        if ( overlap.compare(roadOS.geometry.coordinates, roadOSM.geometry.coordinates) ) { //check if links overlap
-          index ++; //increment links' match counter
-          let angleOS = angle.calculate(roadOS.geometry.coordinates); //find OS angle
-          angleOS = roadOS.properties.direction ? angleOS : (angleOS + 180) % 360; //opposite direction rotate 180
-          let angleOSM = angle.calculate(roadOSM.geometry.coordinates); //find OSM angle
-          let note = nt.generate(angleOS, angleOSM); //generate note if mismatch occure
-          if (note) { //if mismatch add data to arrays
-            mismatch.push(data.format(roadOS, roadOSM, note));
-            arrayOS.push(roadOS);
-            arrayOSM.push(roadOSM);
-          }
-        }
-      }
-    }
-    if (index == 0) { //check link match counter if > 1
-      roadCounter.noMatch ++;
-    } else if (index == 1) {
-      roadCounter.oneMatch ++;
-    } else {
-      roadCounter.multiMatch ++;
-    }
+    compareOSroadWithOSM(roadOS, dataOSM, roadCounter, mismatch, arrayOS, arrayOSM);
 
     if ( i++ % 100 == 0 ) {
       console.log(roadCounter, ' time ', print.footer(tempTime));
     }
   }
   return [arrayOS, arrayOSM, mismatch, roadCounter];
+}
+
+compareOSroadWithOSM = (roadOS, dataOSM, roadCounter, mismatch, arrayOS, arrayOSM) => {
+  let index = 0; //reset counter for number of matches
+  for (let roadOSM of dataOSM.features) { //loop OSM links
+    roadCounter.totalRoadsProcceses ++;
+
+    if (!distance.inRange(roadOS, roadOSM)) {
+      roadCounter.roadsSkipped++;
+      continue;
+    }
+
+    // cleaning up OS names: removing 1.()
+    const osName = roadOS.properties.name.slice(3, (roadOS.properties.name.length - 1))
+
+    if ( name.compare(osName, roadOSM.properties.name) ) { //comapre names of OS and OSM
+      if ( overlap.compare(roadOS.geometry.coordinates, roadOSM.geometry.coordinates) ) { //check if links overlap
+        index ++; //increment links' match counter
+        let angleOS = angle.calculate(roadOS.geometry.coordinates); //find OS angle
+        angleOS = roadOS.properties.direction ? angleOS : (angleOS + 180) % 360; //opposite direction rotate 180
+        let angleOSM = angle.calculate(roadOSM.geometry.coordinates); //find OSM angle
+        let note = nt.generate(angleOS, angleOSM); //generate note if mismatch occure
+        if (note) { //if mismatch add data to arrays
+          mismatch.push(data.format(roadOS, roadOSM, note));
+          arrayOS.push(roadOS);
+          arrayOSM.push(roadOSM);
+        }
+      }
+    }
+  }
+  if (index == 0) { //check link match counter if > 1
+    roadCounter.noMatch ++;
+  } else if (index == 1) {
+    roadCounter.oneMatch ++;
+  } else {
+    roadCounter.multiMatch ++;
+  }
+
 }
 
 //========== script start here ==========
