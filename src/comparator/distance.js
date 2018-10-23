@@ -6,8 +6,9 @@ exports.inRange = (roadOne, roadTwo, range = 1) => {
   if (!!roadOne && !!roadTwo) { // check if road links are not empty
     const coordinatesOne = roadOne.geometry.coordinates;
     const coordinatesTwo = roadTwo.geometry.coordinates;
-    if ( (coordinatesOne && coordinatesOne.length) &&
-         (coordinatesTwo && coordinatesTwo.length) ) {
+    const condition1 = coordinatesOne && coordinatesOne.length;
+    const condition2 = coordinatesTwo && coordinatesTwo.length;
+    if ( condition1 && condition2 ) {
       // find 1 point in first road
       const pointOne = coordinatesOne[0];
       // find 1 point in second road
