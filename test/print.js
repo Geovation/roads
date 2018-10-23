@@ -26,6 +26,14 @@ describe('print.js displays information about script time & number of matched ro
     assert.equal(expected, output);
   });
 
+  it('Test header function if both input arguments are missing. Return false', () => {
+    const input1 = 674;
+    const input2 = 450;
+    const expected = false;
+    const output = print.header();
+    assert.equal(expected, output);
+  });
+
   it('Test report function if input array is given. Return true', () => {
     const input = [1, 2, 3, 4];
     const expected = true;

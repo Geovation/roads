@@ -1,32 +1,25 @@
 const io = require('./io.js');
+const distance = require('./distance.js');
 const name = require('./name.js');
 const overlap = require('./overlap.js');
-const direction = require('./direction.js');
-const toDegree = require('./to-degree.js');
+const angle = require('./angle.js')
 const nt = require('./note-generator.js');
+const data = require('./data.js');
 const print = require('./print.js');
-const turf = require('@turf/turf');
 
 //compare names of the roads for match betwwen OS and OSM
 loop = (input) => {
-  let mismatch = [];
-  let arrayOS = [];
-  let arrayOSM = [];
-
-  let roadProcessed = 0;
-  tempTime = new Date();
-  //counter for number
-  let roadCounter = {
-    noMatch: 0,
-    oneMatch: 0,
-    multiMatch: 0,
-    noName: 0,
+  let mismatch = [], arrayOS = [], arrayOSM = [];
+  let tempTime = new Date();
+  let roadCounter = {  //object holds counter of road links
+    noMatch: 0,  //counter of zero match
+    oneMatch: 0,  //counter of one match
+    multiMatch: 0,  //counter of multi match
+    noName: 0,  //counter of no names links
     roadsSkipped: 0,
     totalRoadsProcceses: 0
   };
 
-//console.log('\n\t***********************************');
-//const timerID = setInterval(() => console.log(roadCounter, ' time ', print.footer(tempTime)), 1000);
   let i = 0;
   [dataOS, dataOSM] = io.read(input[0], input[1]); //read input files
   if (!print.header(dataOS.features.length, dataOSM.features.length)) {
@@ -42,14 +35,7 @@ loop = (input) => {
     for (let roadOSM of dataOSM.features) { //loop OSM links
       roadCounter.totalRoadsProcceses ++;
 
-      // find 1 point in roadOSM
-      const roadOSMPoint = roadOSM.geometry.coordinates[0];
-      // find 1 point in roadOS
-      const roadOSPoint = roadOS.geometry.coordinates[0];
-      // find distance
-      const distance = turf.distance(roadOSPoint,roadOSMPoint);
-      // ingore if longer than the longest segment
-      if (distance > 1) {
+      if (!distance.inRange(roadOS, roadOSM)) {
         roadCounter.roadsSkipped++;
         continue;
       }
@@ -60,12 +46,12 @@ loop = (input) => {
       if ( name.compare(osName, roadOSM.properties.name) ) { //comapre names of OS and OSM
         if ( overlap.compare(roadOS.geometry.coordinates, roadOSM.geometry.coordinates) ) { //check if links overlap
           index ++; //increment links' match counter
-          let angleOS = calculateAngle(roadOS.geometry.coordinates); //find OS angle
+          let angleOS = angle.calculate(roadOS.geometry.coordinates); //find OS angle
           angleOS = roadOS.properties.direction ? angleOS : (angleOS + 180) % 360; //opposite direction rotate 180
-          let angleOSM = calculateAngle(roadOSM.geometry.coordinates); //find OSM angle
+          let angleOSM = angle.calculate(roadOSM.geometry.coordinates); //find OSM angle
           let note = nt.generate(angleOS, angleOSM); //generate note if mismatch occure
           if (note) { //if mismatch add data to arrays
-            mismatch.push(format(roadOS, roadOSM, note));
+            mismatch.push(data.format(roadOS, roadOSM, note));
             arrayOS.push(roadOS);
             arrayOSM.push(roadOSM);
           }
@@ -84,29 +70,7 @@ loop = (input) => {
       console.log(roadCounter, ' time ', print.footer(tempTime));
     }
   }
-
-//clearInterval(timerID);
-
   return [arrayOS, arrayOSM, mismatch, roadCounter];
-}
-
-calculateAngle = (coordinates) => {
-  angle = direction.find(coordinates); //find angle
-  if ( isNaN(angle) ) { //check if not a number
-    return NaN;
-  }
-  return toDegree.convert(angle); //convert to degree
-}
-
-//========== format data to be written to file ==========
-format = (roadOS, roadOSM, note) => {
-  let data = {
-    "roadName": roadOSM.properties.name,
-    "OSId": (roadOS.properties.id).toString(),
-    "OSMId": roadOSM.properties.id,
-    "note": note
-  };
-  return data;
 }
 
 //========== script start here ==========
@@ -117,11 +81,10 @@ exports.start = (input, output, time = new Date()) => {
 
   promise.then( (values) => { //call main function loop
     console.log('Writing data to files');
-    //write data to files
-    io.write(output[0], values[0]);
+    io.write(output[0], values[0]); //write data to files
     io.write(output[1], values[1]);
     io.write(output[2], values[2]);
-    print.report(values[3]); //print report of number of matches of links
+    print.report(values[3]); //print report of number of link matches
     print.footer(time); //print time taken
   });
 }
