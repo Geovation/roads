@@ -5,7 +5,7 @@ describe('index.js is the main file and calls all other modules of RoadFlow', ()
   it('Test Road Flow project when all input, output and temp file names are given. Return true', async () => {
     const input1 = {
       "OS": './test/io/testdataOS.gpkg',
-      "OSM": './test/io/testdataOSM.xml'
+      "OSM": './test/io/testdataOSM.gpkg'
     };
     const input2 = {
       "OS": './test/io/testoutput.json',
@@ -24,7 +24,7 @@ describe('index.js is the main file and calls all other modules of RoadFlow', ()
   it('Test Road Flow project when input file is wrong. Return false', async () => {
     const input1 = {
       "OS": './test/io/testdtaOS.gpkg',
-      "OSM": './test/io/testdataOSM.xml'
+      "OSM": './test/io/testdataOSM.gpkg'
     };
     const input2 = {
       "OS": './test/io/testoutput.json',
@@ -43,7 +43,7 @@ describe('index.js is the main file and calls all other modules of RoadFlow', ()
   it('Test Road Flow project when output directory is missing. Return false', async () => {
     const input1 = {
       "OS": './test/io/testdataOS.gpkg',
-      "OSM": './test/io/testdataOSM.xml'
+      "OSM": './test/io/testdataOSM.gpkg'
     };
     const input2 = {
       "OS": './test/ioy/testoutput.json',
@@ -62,7 +62,7 @@ describe('index.js is the main file and calls all other modules of RoadFlow', ()
   it('Test Road Flow project when output file is missing. Return false', async () => {
     const input1 = {
       "OS": './test/io/testdataOS.gpkg',
-      "OSM": './test/io/testdataOSM.xml'
+      "OSM": './test/io/testdataOSM.gpkg'
     };
     const input2 = {
       "OS": './test/io/',

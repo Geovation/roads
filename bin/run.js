@@ -2,7 +2,7 @@ const {roadFlow}  = require('../src/index.js')
 
 const inputFiles = {
   "OS": './input/London_OS.gpkg',
-  "OSM": './input/London_OSM.pbf'
+  "OSM": './input/London_OSM.gpkg'
 };
 
 const outputFiles = {
