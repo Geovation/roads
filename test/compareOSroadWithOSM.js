@@ -1,82 +1,79 @@
 const assert = require('assert');
 const {compareOSroadWithOSM} = require('../src/comparator/compareOSroadWithOSM.js');
-const {linkComparisions} = require('../src/comparator/compareOSroadWithOSM.js');
+const {isMismatch} = require('../src/comparator/compareOSroadWithOSM.js');
 
 describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
-  describe('Testing "linkComparisions" function that checks matching conditions', () => {
-    it('Test when links have same name, overlap and in OPPOSITE direction. Return true', () => {
+  describe('Testing "isMismatch" function that checks matching conditions', () => {
+    it('Test when both links oneway, have same name, overlap and in OPPOSITE direction. Return true', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)","direction": 0},
+        "properties": {"id": 1,"name": "(1:Some Road)", "direction": -1, "formofway": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
         }
       };
       const input2 = {
-        "properties": { "id": 201,"name": "Some Road","direction": '"oneway"=>"yes"'},
+        "properties": {"id": 201,"name": "Some Road", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
         }
       };
-      const input3 = 3;
       const expected = true;
-      const output = linkComparisions(input1, input2, input3);
+      const output = isMismatch(input1, input2);
       assert.equal(expected, output);
     });
 
-    it('Test when links have same name, overlap and in SAME direction. Return false', () => {
+    it('Test when both links oneway, have same name, overlap and in SAME direction. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)","direction": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
         }
       };
       const input2 = {
-        "properties": { "id": 201,"name": "Some Road","direction": '"oneway"=>"yes"'},
+        "properties": { "id": 201,"name": "Some Road", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
         }
       };
-      const input3 = 3;
       const expected = false;
-      const output = linkComparisions(input1, input2, input3);
+      const output = isMismatch(input1, input2);
       assert.equal(expected, output);
     });
 
-    it('Test when links have same name but do NOT overlap. Return false', () => {
+    it('Test when both links oneway, have same name but do NOT overlap. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)","direction": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[5, 5], [3, 6]]
         }
       };
       const input2 = {
-        "properties": { "id": 201,"name": "Some Road","direction": '"oneway"=>"yes"'},
+        "properties": { "id": 201,"name": "Some Road", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
         }
       };
-      const input3 = 3;
       const expected = false;
-      const output = linkComparisions(input1, input2, input3);
+      const output = isMismatch(input1, input2);
       assert.equal(expected, output);
     });
 
-    it('Test when links have DIFFERENT names. Return false', () => {
+    it('Test when both links oneway, have DIFFERENT names. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)","direction": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
         }
       };
       const input2 = {
-        "properties": { "id": 201,"name": "Another Street","direction": '"oneway"=>"yes"'},
+        "properties": { "id": 201,"name": "Another Street", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -84,7 +81,67 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
       };
       const input3 = 3;
       const expected = false;
-      const output = linkComparisions(input1, input2, input3);
+      const output = isMismatch(input1, input2, input3);
+      assert.equal(expected, output);
+    });
+
+    it('Test when both links are oneways and OS Dual Carriageway. Return false', () => {
+      const input1 = {
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 0},
+        "geometry": {
+          "type": 'LineString',
+          "coordinates": [[1, 1], [2, 2]]
+        }
+      };
+      const input2 = {
+        "properties": { "id": 201,"name": "Some Road", "direction": 0},
+        "geometry": {
+          "type": 'LineString',
+          "coordinates": [[1, 1], [2, 2]]
+        }
+      };
+      const expected = false;
+      const output = isMismatch(input1, input2);
+      assert.equal(expected, output);
+    });
+
+    it('Test when both links are 2-ways and OS Single Carriageway. Return false', () => {
+      const input1 = {
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 1},
+        "geometry": {
+          "type": 'LineString',
+          "coordinates": [[1, 1], [2, 2]]
+        }
+      };
+      const input2 = {
+        "properties": { "id": 201,"name": "Some Road", "direction": 0},
+        "geometry": {
+          "type": 'LineString',
+          "coordinates": [[1, 1], [2, 2]]
+        }
+      };
+      const expected = false;
+      const output = isMismatch(input1, input2);
+      assert.equal(expected, output);
+    });
+
+    it('Test when both links are 2-ways  and OS Dual Carriageway. Return false', () => {
+      const input1 = {
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 0},
+        "geometry": {
+          "type": 'LineString',
+          "coordinates": [[1, 1], [2, 2]]
+        }
+      };
+      const input2 = {
+        "properties": { "id": 201,"name": "Some Road", "direction": 0},
+        "geometry": {
+          "type": 'LineString',
+          "coordinates": [[1, 1], [2, 2]]
+        }
+      };
+      const expected = false;
+      const output = isMismatch(input1, input2);
       assert.equal(expected, output);
     });
   });
