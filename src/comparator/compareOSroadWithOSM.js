@@ -10,10 +10,10 @@ const {calculateAngle} = require('./direction.js');
 const {isOppositeDirection} = require('./direction.js');
 
 let matchesCounter; //counter for howmany matches found in OSM for each OS link
-
+let angleOS, angleOSM;
 //========== compare links, when match check if opposite direction ==========
 isMismatch = (roadOS, roadOSM) => {
-  const isOnewayOS = !!(roadOS.properties.direction && roadOS.properties.formofway);
+  const isOnewayOS = !!roadOS.properties.direction;
   const isOnewayOSM = !!roadOSM.properties.direction;
   if (!isOnewayOS && !isOnewayOSM) {
     return false;
@@ -25,9 +25,9 @@ isMismatch = (roadOS, roadOSM) => {
       if (isOnewayOS ^ isOnewayOSM) {
         return true;
       } else {
-        let angleOS = calculateAngle(roadOS.geometry.coordinates); //find OS angle
+         angleOS = calculateAngle(roadOS.geometry.coordinates); //find OS angle
         angleOS = (roadOS.properties.direction == 1) ? angleOS : (angleOS + 180) % 360; //if link direction is opposite rotate 180
-        const angleOSM = calculateAngle(roadOSM.geometry.coordinates); //find OSM angle
+         angleOSM = calculateAngle(roadOSM.geometry.coordinates); //find OSM angle
         return isOppositeDirection(angleOS, angleOSM); //return true if mismatch occure
       }
     }
@@ -48,6 +48,7 @@ exports.compareOSroadWithOSM = (roadOS, dataOSM, outputData) => {
           "roadName": roadOSM.properties.name,
           "OSId": (roadOS.properties.id).toString(),
           "OSMId": (roadOSM.properties.id).toString(),
+          "Note": 'OS: ' + angleOS + ', OSM: ' + angleOSM
         };
         outputData.info.push(data);  //push object to info array
         outputData.OS.push(roadOS);  //push OS link to OS array
