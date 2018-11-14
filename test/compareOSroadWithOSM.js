@@ -6,7 +6,7 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
   describe('Testing "isMismatch" function that checks matching conditions', () => {
     it('Test when both links oneway, have same name, overlap and in OPPOSITE direction. Return true', () => {
       const input1 = {
-        "properties": {"id": 1,"name": "(1:Some Road)", "direction": -1, "formofway": 1},
+        "properties": {"id": 1,"name": "(1:Some Road)", "direction": -1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -26,7 +26,7 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
 
     it('Test when both links oneway, have same name, overlap and in SAME direction. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -46,7 +46,7 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
 
     it('Test when both links oneway, have same name but do NOT overlap. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[5, 5], [3, 6]]
@@ -66,7 +66,7 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
 
     it('Test when both links oneway, have DIFFERENT names. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -85,49 +85,9 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
       assert.equal(expected, output);
     });
 
-    it('Test when both links are oneway and OS Dual Carriageway. Return false', () => {
+    it('Test when both links are 2-way. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 0},
-        "geometry": {
-          "type": 'LineString',
-          "coordinates": [[1, 1], [2, 2]]
-        }
-      };
-      const input2 = {
-        "properties": { "id": 201,"name": "Some Road", "direction": 0},
-        "geometry": {
-          "type": 'LineString',
-          "coordinates": [[1, 1], [2, 2]]
-        }
-      };
-      const expected = false;
-      const output = isMismatch(input1, input2);
-      assert.equal(expected, output);
-    });
-
-    it('Test when both links are 2-way and OS Single Carriageway. Return false', () => {
-      const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 1},
-        "geometry": {
-          "type": 'LineString',
-          "coordinates": [[1, 1], [2, 2]]
-        }
-      };
-      const input2 = {
-        "properties": { "id": 201,"name": "Some Road", "direction": 0},
-        "geometry": {
-          "type": 'LineString',
-          "coordinates": [[1, 1], [2, 2]]
-        }
-      };
-      const expected = false;
-      const output = isMismatch(input1, input2);
-      assert.equal(expected, output);
-    });
-
-    it('Test when both links are 2-way  and OS Dual Carriageway. Return false', () => {
-      const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 0},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -147,7 +107,7 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
 
     it('Test when OS oneway and OSM 2-way. Return true', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -167,7 +127,7 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
 
     it('Test when OS oneway with opposite direction and OSM 2-way. Return true', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": -1, "formofway": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": -1},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -185,29 +145,9 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
       assert.equal(expected, output);
     });
 
-    it('Test when OS oneway but DUAL Carriageway and OSM 2-way. Return false', () => {
-      const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 1, "formofway": 0},
-        "geometry": {
-          "type": 'LineString',
-          "coordinates": [[1, 1], [2, 2]]
-        }
-      };
-      const input2 = {
-        "properties": { "id": 201,"name": "Some Road", "direction": 0},
-        "geometry": {
-          "type": 'LineString',
-          "coordinates": [[1, 1], [2, 2]]
-        }
-      };
-      const expected = false;
-      const output = isMismatch(input1, input2);
-      assert.equal(expected, output);
-    });
-
     it('Test when OS 2-way and OSM oneway. Return true', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[1, 1], [2, 2]]
@@ -227,7 +167,7 @@ describe('compareOSroadWithOSM.js compare OS link aganist all OSM loop', () => {
 
     it('Test when OS 2-way and OSM oneway, have same name but do NOT overlap. Return false', () => {
       const input1 = {
-        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0, "formofway": 1},
+        "properties": { "id": 1,"name": "(1:Some Road)", "direction": 0},
         "geometry": {
           "type": 'LineString',
           "coordinates": [[5, 5], [3, 6]]
