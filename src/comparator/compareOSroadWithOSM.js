@@ -44,7 +44,7 @@ exports.compareOSroadWithOSM = (roadOS, dataOSM, outputData) => {
     .filter(roadOSM => inRange(roadOS, roadOSM))  //filter features that are in range
     .forEach(roadOSM => {  //loop through filter features in range
       if (isMismatch(roadOS, roadOSM)) { //check return value of call to inner function that compare links
-        let data = { //create object for output file
+        const data = { //create object for output file
           "roadName": roadOSM.properties.name,
           "OSId": (roadOS.properties.id).toString(),
           "OSMId": (roadOSM.properties.id).toString(),
