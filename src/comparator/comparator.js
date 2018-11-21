@@ -2,7 +2,8 @@
 
 const io = require('./io.js');
 const {calculateProgress} = require('./progress.js');
-const {compareOSroadWithOSM}= require('./compareOSroadWithOSM.js');
+const {compareOSroadWithOSM} = require('./compareOSroadWithOSM.js');
+const {filterDuplication} = require('./filter-output.js');
 const print = require('./print.js');
 const startTime = new Date();
 
@@ -40,5 +41,6 @@ exports.compareData = (input, outputFiles) => {
     roadCounters[key] ++; // increament related counter according to key value
     print.progress(calculateProgress(roadCounters)); //print the progess of the calculation on the run
   }
+  outputData.OS = filterDuplication(outputData.OS);
   outputResults(outputFiles, outputData, roadCounters); //call inner function
 }
