@@ -3,11 +3,8 @@
 //isMismatch function compares two links and return true either if direction mismatch
 //found or one link is two-way and other is one-way.
 
-const {inRange} = require('./checker.js');
-const {compareNames} = require('./checker.js');
-const {isOverlapping} = require('./checker.js');
-const {calculateAngle} = require('./direction.js');
-const {isOppositeDirection} = require('./direction.js');
+const {inRange, compareNames, isOverlapping} = require('./checker.js');
+const {calculateAngle, isOppositeDirection} = require('./direction.js');
 
 let matchesCounter; //counter for howmany matches found in OSM for each OS link
 let angleOS, angleOSM;
@@ -25,9 +22,9 @@ isMismatch = (roadOS, roadOSM) => {
       if (isOnewayOS ^ isOnewayOSM) {
         return true;
       } else {
-         angleOS = calculateAngle(roadOS.geometry.coordinates); //find OS angle
+        angleOS = calculateAngle(roadOS.geometry.coordinates); //find OS angle
         angleOS = (roadOS.properties.direction == 1) ? angleOS : (angleOS + 180) % 360; //if link direction is opposite rotate 180
-         angleOSM = calculateAngle(roadOSM.geometry.coordinates); //find OSM angle
+        angleOSM = calculateAngle(roadOSM.geometry.coordinates); //find OSM angle
         return isOppositeDirection(angleOS, angleOSM); //return true if mismatch occure
       }
     }
