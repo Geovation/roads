@@ -46,14 +46,12 @@ exports.compareOSroadWithOSM = (roadOS, dataOSM, outputData) => {
           "roadName": roadOSM.properties.name,
           "OSId": (roadOS.properties.id).toString(),
           "OSMId": (roadOSM.properties.id).toString(),
-          "Note": 'OS: ' + angleOS + ', OSM: ' + angleOSM
         };
         outputData.info.push(data);  //push object to info array
         outputData.OS.push(roadOS);  //push OS link to OS array
         outputData.OSM.push(roadOSM);  //push OSM link to OSM array
       }
     });
-
   if (matchesCounter === 0) { //if number of matches ZERO set to 'noMatch'
     matchesCounter = 'noMatch';
   } else if (matchesCounter === 1) { //if number of matches ONE set to 'oneMatch'
