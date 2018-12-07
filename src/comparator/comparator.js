@@ -25,7 +25,7 @@ exports.compareData = (input, outputFiles) => {
     noName: 0,  //counter of no names links
     twoway: 0, //counter of two-way links
     processedOS: 0,  //counter for processed OS links
-    totalLinkssOS: 0  //counter for total links in OS
+    totalLinksOS: 0  //counter for total links in OS
   };
   const outputData= { OS: [], OSM: [], info: []}; //object of 3 output data arrays
   [dataOS, dataOSM] = io.read(input); //read input files
